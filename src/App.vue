@@ -1,26 +1,21 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <cheerupHeader></cheerupHeader>
+  <router-view></router-view>
+  <cheerupFooter></cheerupFooter>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import cheerupHeader from "./layout/cheerupHeader.vue";
+import cheerupFooter from "./layout/cheerupFooter.vue";
 
 export default {
-  name: 'App',
+  // eslint-disable-next-line
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    cheerupHeader,
+    cheerupFooter,
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style></style>
