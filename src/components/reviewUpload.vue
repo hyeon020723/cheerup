@@ -1,7 +1,7 @@
 <template>
   <div class="wholeBox">
     <div class="writingHeader">
-      <div class="write"><b>글쓰기</b></div>
+      <div class="write"><b>글쓰기버튼</b></div>
       <div class="tollBox">
         <button @click="uploadDecision()" class="registerToll">등록</button>
         <a @click="cancelDecision()">
