@@ -51,7 +51,7 @@ export default {
           " '네'를 누르시면 작성한 내용이 사라집니다. 그래도 취소하시겠습니까?"
         )
       ) {
-        window.location.href = this.$router.push("reviewPage"); //erroe
+        this.$router.push("review"); //erroe
         //
         //
         //
@@ -73,19 +73,20 @@ export default {
 .writingHeader {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  width: 50%;
   align-items: center; /* 수직 가운데 정렬*/
   text-align: center; /*수평 가운데 정렬 */
   height: 50px;
   padding: 5px; /*간격을 주기 위함*/
 }
 
+
 .registerToll,
 .cancelToll {
   width: 80px;
   height: 40px;
   background-color: white;
-  margin: 0 10px;
+  margin: 0 3px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -99,13 +100,13 @@ export default {
 
 .middleBox {
   height: 100%;
-  width: 100%;
+  width: 70%;
   text-align: center;
   align-items: center;
 }
 
 .textareaInput {
-  width: 100%;
+  width: 70%;
   height: 35px;
   padding: 0 10px;
 }
@@ -113,7 +114,7 @@ export default {
 .mainContent {
   margin: 10px 0;
   padding: 10px;
-  width: 100%;
+  width: 70%;
   height: 200px;
   max-height: 350px;
   overflow: scroll;
