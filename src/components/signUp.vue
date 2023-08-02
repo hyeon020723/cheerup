@@ -67,6 +67,38 @@
         <!-- 비밀번호확인 입력 공간 -->
       </div>
 
+      <div class="inputCard">
+        <!-- 여섯번째 줄 -->
+        <div class="dropdown">
+          <button class="dropbtn" @click="toggleEmploymentStatus">
+            {{ employmentStatus }}
+          </button>
+          <div class="dropdown-content" v-show="showEmploymentStatus">
+            <a
+              v-for="status in employmentStatusOptions"
+              :key="status"
+              @click="selectEmploymentStatus(status)"
+              >{{ status }}</a
+            >
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn" @click="toggleCategory">
+            {{ category }}
+          </button>
+          <div class="dropdown-content" v-show="showCategory">
+            <a
+              v-for="item in categoryOptions"
+              :key="item"
+              @click="selectCategory(item)"
+              >{{ item }}</a
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- 비밀번호확인 입력 공간 -->
+
       <div class="submit">
         <button class="submitBtn">가입하기</button>
       </div>
@@ -77,6 +109,49 @@
 <script>
 export default {
   name: "cheerupSignup",
+  data() {
+    return {
+      employmentStatus: "취업", // 초기값 설정
+      showEmploymentStatus: false, // 드롭다운 토글 변수
+      employmentStatusOptions: ["취업", "취업준비생"], // 취업 상태 옵션들
+
+      category: "기계", // 초기값 설정
+      showCategory: false, // 드롭다운 토글 변수
+      categoryOptions: [
+        "개발",
+        "경영마케팅",
+        "제조업",
+        "정보통신",
+        "공기업",
+        "유통물류",
+        "금융",
+        "컨설팅",
+        "교육",
+        "기타",
+      ], // 카테고리 옵션들
+    };
+  },
+  methods: {
+    // 취업 상태 드롭다운 토글 함수
+    toggleEmploymentStatus() {
+      this.showEmploymentStatus = !this.showEmploymentStatus;
+    },
+    // 취업 상태 선택 함수
+    selectEmploymentStatus(status) {
+      this.employmentStatus = status;
+      this.showEmploymentStatus = false;
+    },
+
+    // 카테고리 드롭다운 토글 함수
+    toggleCategory() {
+      this.showCategory = !this.showCategory;
+    },
+    // 카테고리 선택 함수
+    selectCategory(item) {
+      this.category = item;
+      this.showCategory = false;
+    },
+  },
 };
 </script>
 

@@ -32,7 +32,7 @@
       >
     </div>
   </div>
-  
+
   <!--WholeBox div end-->
 </template>
 
@@ -40,11 +40,9 @@
 export default {
   name: "reviewRead",
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 
@@ -95,6 +93,4 @@ th,
 td {
   padding-right: 5px;
 }
-
-
 </style>

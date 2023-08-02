@@ -17,7 +17,7 @@
     </div>
   </div>
 </template>
-
+<script></script>
 <style scoped>
 @font-face {
   font-family: "GmarketSansMedium";

@@ -39,6 +39,8 @@ export default {
       if (confirm("작성한 글을 게시하시겠습니까?")) {
         //네를 누르면 게시
         alert("글을 게시하였습니다");
+        this.$router.push("review");
+
         //취소를 누르면 유지
       } else {
         alert("취소하였습니다.");
@@ -51,7 +53,7 @@ export default {
           " '네'를 누르시면 작성한 내용이 사라집니다. 그래도 취소하시겠습니까?"
         )
       ) {
-        this.$router.push("review"); //erroe
+        this.$router.push("review");
         //
         //
         //
@@ -79,7 +81,6 @@ export default {
   height: 50px;
   padding: 5px; /*간격을 주기 위함*/
 }
-
 
 .registerToll,
 .cancelToll {

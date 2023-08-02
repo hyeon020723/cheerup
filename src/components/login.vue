@@ -51,7 +51,7 @@
       </div>
 
       <div class="login">
-        <button class="loginBtn">로그인</button>
+        <button class="loginBtn" @click="loginClicked">로그인</button>
       </div>
       <!-- 로그인 버튼 눌렀을 때, alert뜨고 확인 누르면 main으로 이동?? -->
     </div>
@@ -61,6 +61,12 @@
 <script>
 export default {
   name: "cheerupLogin",
+  methods: {
+    loginClicked() {
+      alert("로그인이 완료되었습니다.");
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 
