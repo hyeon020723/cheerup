@@ -2,7 +2,7 @@
   <div class="cheerupHeader">
     <router-link to="/" class="home">
       <div id="logo">
-        <img src="../components/logo.png" />
+        <img src="../assets/logo.png" />
         <h2 style="color: #000080">취</h2>
         <h2 style="color: #ffd700">얼업</h2>
       </div></router-link

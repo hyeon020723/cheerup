@@ -55,6 +55,9 @@ export default {
 h3 {
   font-size: 18px;
 }
+button:hover {
+  cursor: pointer;
+}
 
 .main {
   height: 400px;
