@@ -1,0 +1,39 @@
+<template>
+  <div>
+    <cheerupHeader />
+    <router-view />
+    <cheerupFooter />
+  </div>
+</template>
+
+<script>
+import cheerupHeader from "./layout/cheerupHeader.vue";
+import cheerupFooter from "./layout/cheerupFooter.vue";
+
+export default {
+  name: "App",
+  components: {
+    cheerupHeader,
+    cheerupFooter,
+  },
+  data() {
+    return {
+      isHeaderFixed: false, //헤더 저장 여부 변수
+    };
+  },
+};
+</script>
+
+<style scoped>
+.cheerupHeader {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+</style>
