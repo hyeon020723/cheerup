@@ -17,64 +17,81 @@
           <!-- 선택된 파일 업로드 버튼 -->
         </div>
 
-        <div class="inputCard" id="inputId">
+        <div class="inputCard">
           <!-- 세번째 줄 -->
           <input
             class="input"
             id="inputId"
-            placeholder="아이디를 입력하세요 *"
+            placeholder="아이디를 입력하세요 * "
+            v-model="inputId"
           />
-          <button id="duplicateCheck">중복확인</button>
+          <button id="duplicateCheckBtn" @click="duplicateCheck()">
+            중복확인
+          </button>
         </div>
 
         <div class="inputCard">
           <input
             class="input"
-            id="nickName"
+            id="inputNickName"
             placeholder="사용하실 닉네임을 입력하세요 *"
+            v-model="inputNickName"
           />
         </div>
 
         <div class="inputCard">
           <input
             class="input"
-            id="password"
+            id="inputPW"
             placeholder="비밀번호를 입력하세요 *"
+            v-model="inputPW"
           />
         </div>
 
         <div class="inputCard">
           <input
             class="input"
-            id="checkPassword"
-            placeholder="비밀번호를 다시 입력하세요 *"
+            id="inputCPW"
+            placeholder="비밀번호를 다시한번 입력하세요 *"
+            v-model="inputCPW"
           />
           <!-- 비밀번호확인 입력 공간 -->
         </div>
 
         <div class="inputCard">
           <div class="dropdown">
-            <p id="employment">취업 상태 :</p>
-            <select class="employment">
+            <p>취업 상태 :</p>
+
+            <select class="employment" v-model="selectEmployment">
               <option value="none">-</option>
-              <option>취업</option>
-              <option>취업준비</option>
+              <option value="취업">취업</option>
+              <option value="취업준비">취업준비</option>
             </select>
           </div>
 
           <div class="dropdown">
-            <p id="category">분야 :</p>
-            <select class="category">
+            <p>분야 :</p>
+            <select class="category" v-model="selectCategory">
               <option value="none">-</option>
-              <option v-for="item in categoryOptions" :key="item" :value="item">
-                {{ item }}
-              </option>
+              <option value="개발">개발</option>
+              <option value="경영마케팅">경영마케팅</option>
+              <option value="제조업">제조업</option>
+              <option value="정보통신">정보통신</option>
+              <option value="공기업">공기업</option>
+              <option value="유통물류">유통물류</option>
+              <option value="금융">금융</option>
+              <option value="컨설팅">컨설팅</option>
+              <option value="교육">교육</option>
+              <option value="기타">기타</option>
             </select>
           </div>
         </div>
+        <div class="dropdownGuide">
+          <p>취업상태가 준비인 분들은 분야를 선택하지 않아도 됩니다.</p>
+        </div>
 
         <div class="submit">
-          <button id="submitBtn">가입하기</button>
+          <button id="submitBtn" @click="memberAdd()">가입하기</button>
         </div>
       </form>
     </div>
@@ -84,54 +101,47 @@
 <script>
 export default {
   name: "cheerupSignup",
+
   data() {
     return {
-      showCategory: false, // 드롭다운 토글 변수
-      categoryOptions: [
-        "개발",
-        "경영마케팅",
-        "제조업",
-        "정보통신",
-        "공기업",
-        "유통물류",
-        "금융",
-        "컨설팅",
-        "교육",
-        "기타",
-      ], // 카테고리 옵션들
-
-      //받아올 데이터 입력받을 곳
-      choice: "",
-      id: "",
-      nickName: "",
-      password: "",
-      checkPassword: "",
-      employment: "",
-      category: "",
+      inputId: "",
+      inputNickName: "",
+      inputPW: "",
+      inputCPW: "",
+      selectEmployment: "none",
+      selectCategory: "none",
     };
   },
   methods: {
-    // 카테고리 드롭다운 토글 함수
-    toggleCategory() {
-      this.showCategory = !this.showCategory;
+    duplicateCheck() {
+      alert("사용가능한 아이디입니다.");
     },
-    // 카테고리 선택 함수
-    selectCategory(item) {
-      this.category = item;
-      this.showCategory = false;
+    memberAdd() {
+      if (this.inputId === "") {
+        alert("아이디를 입력하세요.");
+        return false;
+      } else if (this.inputNickName === "") {
+        alert("닉네임을 입력하세요.");
+        return false;
+      } else if (this.inputPW === "") {
+        alert("비밀번호를 입력하세요.");
+        return false;
+      } else if (this.inputPW != this.inputCPW) {
+        alert("비밀번호가 일치하지않습니다.");
+        return false;
+      } else if (this.selectEmployment === "none") {
+        alert("취업상태를 선택하세요.");
+        return false;
+      } else if (
+        (this.selectEmployment === "취업") &
+        (this.selectCategory === "none")
+      ) {
+        alert("분야를 선택하세요.");
+        return false;
+      } else {
+        alert("회원가입이 완료되었습니다.");
+      }
     },
-    // submitForm() {
-    //   const userData = {
-    //     //eslint-disable-line no-unused-vars
-    //     choice: this.choice,
-    //     id: this.id,
-    //     nickName: this.nickName,
-    //     password: this.password,
-    //     checkPassword: this.checkPassword,
-    //     employment: this.employment,
-    //     category: this.category,
-    //   };
-    // },
   },
 };
 </script>
@@ -176,12 +186,14 @@ export default {
 
 /*학생증 사진 업로드 버튼*/
 #studentPicUpload {
+  white-space: nowrap; /*줄바꿈 금지 */
   width: 200px;
 }
 
 /*중복확인 버튼 */
-#duplicateCheck {
+#duplicateCheckBtn {
   width: 100px;
+  white-space: nowrap;
   height: 100%;
 }
 
@@ -190,6 +202,12 @@ export default {
   width: auto;
   margin: 5px;
   display: inline-flex;
+}
+.dropdownGuide > p {
+  white-space: nowrap;
+  font-size: small;
+  text-align: center;
+  color: #808080;
 }
 
 /* 가입하기 버튼 */
