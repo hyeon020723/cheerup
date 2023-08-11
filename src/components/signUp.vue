@@ -1,24 +1,27 @@
 <template>
-  <!-- contents부분 코드 -->
   <div class="contents">
     <div class="signUpCard">
-      <!-- 카드형식으로 만들기 위해 전체를 묶음-->
       <form @submit.prevent="submitForm">
         <div class="signUp">
-          <!-- 제일 윗 줄 -->
           <p style="font-size: 18px"><b>회원가입</b></p>
           <p style="font-size: 12px; color: gray">* 필수입력 정보입니다.</p>
         </div>
 
-        <div class="inputCard">
+        <!-- <div class="inputCard">
           <input class="choice" type="file" accept="image/" />
-          <!-- 업로드 할 파일 선택 -->
           <button id="studentPicUpload">학생증 사진 업로드</button>
-          <!-- 선택된 파일 업로드 버튼 -->
+        </div> -->
+
+        <div class="inputCard">
+          <input
+            class="input"
+            id="inputStudentID"
+            placeholder="학번을 입력하세요 *"
+            v-model="inputStudentID"
+          />
         </div>
 
         <div class="inputCard">
-          <!-- 세번째 줄 -->
           <input
             class="input"
             id="inputId"
@@ -104,6 +107,7 @@ export default {
 
   data() {
     return {
+      inputStudentID: "",
       inputId: "",
       inputNickName: "",
       inputPW: "",
@@ -117,29 +121,53 @@ export default {
       alert("사용가능한 아이디입니다.");
     },
     memberAdd() {
-      if (this.inputId === "") {
+      const StudentID = this.inputStudentID;
+      const ID = this.inputId;
+      const NickName = this.inputNickName;
+      const PW = this.inputPW;
+      const CheckPW = this.inputCPW;
+      const employment = this.selectEmployment;
+      const Category = this.selectCategory;
+
+      //공란 확인
+
+      if (StudentID === "") {
+        alert("학번을 입력하세요.");
+        return false;
+      }
+      if (ID === "") {
         alert("아이디를 입력하세요.");
         return false;
-      } else if (this.inputNickName === "") {
+      }
+      if (NickName === "") {
         alert("닉네임을 입력하세요.");
         return false;
-      } else if (this.inputPW === "") {
+      }
+      if (PW === "") {
         alert("비밀번호를 입력하세요.");
         return false;
-      } else if (this.inputPW != this.inputCPW) {
+      }
+      if (CheckPW === "") {
+        alert("비밀번호를 다시한번 입력하세요.");
+        return false;
+      }
+      if (PW != CheckPW) {
         alert("비밀번호가 일치하지않습니다.");
         return false;
-      } else if (this.selectEmployment === "none") {
+      }
+      if (employment === "none") {
         alert("취업상태를 선택하세요.");
         return false;
-      } else if (
-        (this.selectEmployment === "취업") &
-        (this.selectCategory === "none")
-      ) {
+      }
+      if ((employment === "취업") & (Category === "none")) {
         alert("분야를 선택하세요.");
         return false;
-      } else {
+      }
+
+      //회원가입 완료
+      if ((StudentID, ID, NickName, PW != "")) {
         alert("회원가입이 완료되었습니다.");
+        console.log(StudentID, ID, NickName, PW);
       }
     },
   },

@@ -1,20 +1,21 @@
 <template>
-  <!-- contents부분 코드 -->
   <div class="contents">
     <div class="loginCard">
-      <!-- 카드형식으로 만들기 위해 전체를 묶음-->
-
       <div class="signUp">
-        <!-- 제일 윗 줄 -->
         <img src="../assets/logo.png" />
-        <!-- 로고 이미지로 삽입 -->
       </div>
 
       <div class="projectName">
-        <!-- 두번째 줄 -->
         <b><span style="color: #000080; font-size: 28px">취</span></b>
         <b><span style="color: #ffd700; font-size: 28px">얼업</span></b>
       </div>
+      <!--여기서부터 지워야하는 부분-->
+      <p>
+        <br />
+        임시 data<br />id: "user", password: "0000" <br />id: "admin", password:
+        "1234"<br />
+      </p>
+      <!--여기까지 지워야하는 부분-->
 
       <div class="loginInputCard">
         <p><b>아이디</b></p>
@@ -31,7 +32,7 @@
         <p><b>비밀번호</b></p>
         <input
           class="loginInput"
-          type="text"
+          type="password"
           id="password"
           v-model="password"
           placeholder="비밀번호를 입력하세요"
@@ -41,7 +42,6 @@
       <div class="login">
         <button id="loginBtn" @click="loginClicked">로그인</button>
       </div>
-      <!-- 로그인 버튼 눌렀을 때, alert뜨고 확인 누르면 main으로 이동?? -->
     </div>
   </div>
 </template>
@@ -53,19 +53,38 @@ export default {
     return {
       id: "",
       password: "",
+
+      // 임시회원db
+      users: [
+        { id: "user", password: "0000" },
+        { id: "admin", password: "1234" },
+      ],
     };
   },
   methods: {
     loginClicked() {
-      if (this.id === "") {
+      const ID = this.id;
+      const PW = this.password;
+
+      if (ID === "") {
         alert("아이디를 입력해주세요");
         return;
-      } else if (this.password === "") {
+      }
+      if (PW === "") {
         alert("비밀번호를 입력해주세요");
         return;
-      } else {
-        alert("로그인이 완료되었습니다.");
-        this.$router.push("/");
+      }
+      if (ID !== "" && PW !== "") {
+        const user = this.users.find((user) => user.id === ID);
+
+        if (user && user.password === PW) {
+          alert("로그인이 완료되었습니다.");
+          console.log(ID, PW);
+          this.isLoggedIn = true;
+          this.$router.push("/");
+        } else {
+          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
       }
     },
   },
@@ -73,7 +92,6 @@ export default {
 </script>
 
 <style>
-/* 카드형식으로 만들기 */
 .loginCard {
   background-color: white;
   width: 400px;
@@ -88,6 +106,10 @@ export default {
   justify-items: center;
   align-items: center;
 }
+.signUp {
+  display: flex;
+  flex-direction: column;
+}
 .loginInputCard {
   height: 40px;
   margin-top: 30px;
@@ -97,7 +119,7 @@ export default {
   display: flex;
 }
 
-.loginInputCard p {
+.loginInputCard > p {
   width: 50%;
 }
 

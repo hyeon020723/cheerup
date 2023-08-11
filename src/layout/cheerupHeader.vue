@@ -11,13 +11,41 @@
       <router-link to="/info" class="menu">채용 정보</router-link> |
       <router-link to="/review" class="menu">취업 후기</router-link>
     </div>
+
     <div class="loginWithSignup">
-      <router-link to="/login" class="menuLogin">로그인</router-link> |
-      <router-link to="/signup" class="menuSignup">회원가입</router-link>
+      <span v-if="isLoggedIn">
+        <!--로그인 시-->
+        <a @click="logout" class="menuLogout">로그아웃</a> |
+        <router-link to="/myPage" class="menuLogout">마이페이지</router-link>
+      </span>
+
+      <span v-else>
+        <router-link to="/login" class="menuLogin">로그인</router-link> |
+        <router-link to="/signup" class="menuSignup">회원가입</router-link>
+      </span>
     </div>
+    <!--loginWithSignup end-->
   </div>
 </template>
-
+<script>
+export default {
+  data() {
+    return {
+      isLoggedIn: false, // 기본 값 로그아웃
+    };
+  },
+  computed: {
+    userIsLoggedIn() {
+      return this.isLoggedIn;
+    },
+  },
+  methods: {
+    logout() {
+      this.isLoggedIn = false;
+    },
+  },
+};
+</script>
 <style scoped>
 @font-face {
   font-family: "GmarketSansMedium";
