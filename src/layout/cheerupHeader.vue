@@ -5,47 +5,59 @@
         <img src="../assets/logo.png" />
         <h2 style="color: #000080">취</h2>
         <h2 style="color: #ffd700">얼업</h2>
-      </div></router-link
-    >
-    <div class="mainMenu">
-      <router-link to="/info" class="menu">채용 정보</router-link> |
-      <router-link to="/review" class="menu">취업 후기</router-link>
+      </div>
+    </router-link>
+
+    <div class="mainMenuBox">
+      <router-link to="/info" class="mainMenu">채용 정보</router-link> |
+      <router-link to="/review" class="mainMenu">취업 후기</router-link>
     </div>
 
-    <div class="loginWithSignup">
+    <div class="loginWithSignupBox">
       <span v-if="isLoggedIn">
         <!--로그인 시-->
-        <a @click="logout" class="menuLogout">로그아웃</a> |
-        <router-link to="/myPage" class="menuLogout">마이페이지</router-link>
+        <a @click="logout" class="loginWithSignupMenu">로그아웃</a> |
+        <router-link to="/myPage" class="loginWithSignupMenu"
+          >마이페이지</router-link
+        >
       </span>
 
-      <span v-else>
-        <router-link to="/login" class="menuLogin">로그인</router-link> |
-        <router-link to="/signup" class="menuSignup">회원가입</router-link>
+      <span v-if="!isLoggedIn">
+        <router-link to="/login" class="loginWithSignupMenu"
+          >로그인</router-link
+        >
+        |
+        <router-link to="/signup" class="loginWithSignupMenu"
+          >회원가입</router-link
+        >
       </span>
     </div>
     <!--loginWithSignup end-->
   </div>
 </template>
+
 <script>
 export default {
   data() {
     return {
-      isLoggedIn: false, // 기본 값 로그아웃
+      isLoggedIn: true, // 기본 상태
     };
   },
-  computed: {
-    userIsLoggedIn() {
-      return this.isLoggedIn;
-    },
-  },
+
   methods: {
+    login() {
+      this.isLoggedIn = true;
+      this.$router.push("/");
+    },
+
     logout() {
       this.isLoggedIn = false;
+      this.$router.push("/");
     },
   },
 };
 </script>
+
 <style scoped>
 @font-face {
   font-family: "GmarketSansMedium";
@@ -82,17 +94,17 @@ export default {
   object-fit: contain;
 }
 
-.mainMenu {
+.mainMenuBox {
   white-space: nowrap;
   margin-left: 5%;
   margin-right: auto;
 }
 
-.loginWithSignup {
+.loginWithSignupBox {
   background-color: #e2e2e2;
   border-radius: 8px;
   color: white;
-  width: 170px;
+  width: 200px;
   white-space: nowrap;
   height: 40px;
   display: flex;
@@ -100,22 +112,20 @@ export default {
   align-items: center;
 }
 
-.menu {
+.mainMenu {
   text-decoration: none;
   padding: 10px;
   color: #000080;
 }
-.menuLogin,
-.menuSignup {
+.loginWithSignupMenu {
   text-decoration: none;
   padding: 10px;
   color: gray;
 }
-.menuLogin:hover,
-.menuSignup:hover {
+.loginWithSignupMenu:hover {
   color: white;
 }
-.menu:hover {
+.mainMenu:hover {
   background-color: #000080;
   border-radius: 8px;
   color: white;

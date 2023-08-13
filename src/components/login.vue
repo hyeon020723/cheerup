@@ -25,6 +25,7 @@
           id="id"
           v-model="id"
           placeholder="아이디를 입력해주세요"
+          @keyup.enter="login"
         />
       </div>
 
@@ -36,17 +37,20 @@
           id="password"
           v-model="password"
           placeholder="비밀번호를 입력하세요"
+          @keyup.enter="login"
         />
       </div>
 
       <div class="login">
-        <button id="loginBtn" @click="loginClicked">로그인</button>
+        <button id="loginBtn" @click="login">로그인</button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import cheerupHeader from "@/layout/cheerupHeader.vue";
+
 export default {
   name: "cheerupLogin",
   data() {
@@ -61,8 +65,13 @@ export default {
       ],
     };
   },
+  components: {
+    // eslint-disable-next-line
+    cheerupHeader,
+  },
+
   methods: {
-    loginClicked() {
+    login() {
       const ID = this.id;
       const PW = this.password;
 
@@ -74,14 +83,15 @@ export default {
         alert("비밀번호를 입력해주세요");
         return;
       }
+
       if (ID !== "" && PW !== "") {
         const user = this.users.find((user) => user.id === ID);
 
         if (user && user.password === PW) {
+          this.$emit("login"); // 로그인 성공 이벤트 발생
+
           alert("로그인이 완료되었습니다.");
           console.log(ID, PW);
-          this.isLoggedIn = true;
-          this.$router.push("/");
         } else {
           alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         }

@@ -28,7 +28,7 @@
             placeholder="아이디를 입력하세요 * "
             v-model="inputId"
           />
-          <button id="duplicateCheckBtn" @click="duplicateCheck()">
+          <button id="duplicateCheckBtn" @click="duplicateCheck">
             중복확인
           </button>
         </div>
@@ -94,7 +94,7 @@
         </div>
 
         <div class="submit">
-          <button id="submitBtn" @click="memberAdd()">가입하기</button>
+          <button id="submitBtn" @click="memberAdd">가입하기</button>
         </div>
       </form>
     </div>
@@ -102,6 +102,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "cheerupSignup",
 
@@ -116,34 +118,39 @@ export default {
       selectCategory: "none",
     };
   },
+
   methods: {
     duplicateCheck() {
       alert("사용가능한 아이디입니다.");
     },
+
     memberAdd() {
-      const StudentID = this.inputStudentID;
-      const ID = this.inputId;
-      const NickName = this.inputNickName;
-      const PW = this.inputPW;
+      const postData = {
+        studentID: this.inputStudentID,
+        id: this.inputId,
+        nickname: this.inputNickName,
+        password: this.inputPW,
+        employment: this.selectEmployment,
+        Category: this.selectCategory,
+      };
+
       const CheckPW = this.inputCPW;
-      const employment = this.selectEmployment;
-      const Category = this.selectCategory;
 
       //공란 확인
 
-      if (StudentID === "") {
+      if (this.inputStudentID === "") {
         alert("학번을 입력하세요.");
         return false;
       }
-      if (ID === "") {
+      if (this.inputId === "") {
         alert("아이디를 입력하세요.");
         return false;
       }
-      if (NickName === "") {
+      if (this.inputNickName === "") {
         alert("닉네임을 입력하세요.");
         return false;
       }
-      if (PW === "") {
+      if (this.inputPW === "") {
         alert("비밀번호를 입력하세요.");
         return false;
       }
@@ -151,23 +158,38 @@ export default {
         alert("비밀번호를 다시한번 입력하세요.");
         return false;
       }
-      if (PW != CheckPW) {
+      if (this.inputPW != CheckPW) {
         alert("비밀번호가 일치하지않습니다.");
         return false;
       }
-      if (employment === "none") {
+      if (this.selectEmployment === "none") {
         alert("취업상태를 선택하세요.");
         return false;
       }
-      if ((employment === "취업") & (Category === "none")) {
+      if (this.selectEmployment === "취업" && this.selectCategory === "none") {
         alert("분야를 선택하세요.");
         return false;
       }
 
       //회원가입 완료
-      if ((StudentID, ID, NickName, PW != "")) {
-        alert("회원가입이 완료되었습니다.");
-        console.log(StudentID, ID, NickName, PW);
+      if (
+        this.inputStudentID &&
+        this.inputId &&
+        this.inputNickName &&
+        this.inputPW
+      ) {
+        axios
+          .post("/api/members", postData)
+          .then((res) => {
+            // API 요청 성공 시 처리할 내용
+            console.log(res.data); // 서버로부터의 응답 데이터 출력
+            alert("회원가입이 완료되었습니다.");
+            this.$router.push("/login");
+          })
+          .catch((error) => {
+            // API 요청 실패 시 처리할 내용
+            console.error(error); // 에러 메시지 출력
+          });
       }
     },
   },

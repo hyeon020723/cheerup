@@ -13,11 +13,11 @@
           <img class="cardImg" :src="job.imageURL" alt="기업 로고" />
           <div class="cardBody">
             <!-- 기업 이름 -->
-            <h5 class="card-title">{{ job.companyName }}</h5>
+            <h5>{{ job.companyName }}</h5>
             <!-- 상세 정보 -->
-            <p class="card-text">{{ job.details }}</p>
+            <p>{{ job.details }}</p>
             <!-- 모집 날짜 -->
-            <p class="card-text">{{ job.recruitmentDate }}</p>
+            <p class="cardDate">{{ job.recruitmentDate }}</p>
           </div>
         </div>
       </div>
@@ -118,6 +118,7 @@ export default {
 }
 
 .cardList {
+  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   margin-left: 1.5%;
@@ -139,13 +140,29 @@ export default {
   background-color: white;
   border-radius: 8px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .cardImg {
   height: 60px;
+  width: 100%;
+  object-fit: cover;
 }
-
-.card-title {
-  font-size: larger;
+.cardBody > h5 {
+  /*기업 정보 */
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+  white-space: nowrap;
+}
+.cardBody > p {
+  /*채용 상세 정보 */
+  font-size: auto;
+  white-space: nowrap;
+}
+.cardDate {
+  /*채용 날짜 */
+  white-space: nowrap;
+  font-size: small;
 }
 </style>

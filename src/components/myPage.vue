@@ -12,7 +12,7 @@
           </tr>
           <tr>
             <th>아이디</th>
-            <td>abc123</td>
+            <td>user</td>
           </tr>
           <tr>
             <th>취업상태</th>

@@ -5,10 +5,10 @@ import login from "@/components/login.vue";
 import signup from "@/components/signUp.vue";
 import myPage from "@/components/myPage.vue";
 import main from "@/components/main.vue";
+
 // 개별 게시물
 import reviewRead from "@/components/reviewRead.vue";
 import reviewUpload from "@/components/reviewUpload.vue";
-
 const routes = [
   {
     path: "/",

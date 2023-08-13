@@ -30,7 +30,7 @@
   background-color: rgb(237, 237, 237);
   color: rgb(183, 183, 183);
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
 }
 
 .footerCheerUpLogo {
@@ -41,6 +41,6 @@
 .footerRight {
   text-align: right;
   font-size: medium;
-  font-weight:lighter;
+  font-weight: lighter;
 }
 </style>
