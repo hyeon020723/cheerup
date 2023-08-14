@@ -55,8 +55,10 @@ export default {
   name: "cheerupLogin",
   data() {
     return {
-      id: "",
-      password: "",
+      user: {
+        id: "",
+        password: "",
+      },
 
       // 임시회원db
       users: [
@@ -91,7 +93,7 @@ export default {
           this.$emit("login"); // 로그인 성공 이벤트 발생
 
           alert("로그인이 완료되었습니다.");
-          console.log(ID, PW);
+          console.log(user);
         } else {
           alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         }

@@ -47,6 +47,7 @@ export default {
   methods: {
     login() {
       this.isLoggedIn = true;
+
       this.$router.push("/");
     },
 

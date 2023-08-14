@@ -49,7 +49,7 @@ export default {
           " '네'를 누르시면 작성한 내용이 사라집니다. 그래도 취소하시겠습니까?"
         )
       ) {
-        this.$router.push("review");
+        this.$router.push("/review");
         //
         //
         //

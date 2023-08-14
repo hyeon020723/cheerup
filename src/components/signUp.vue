@@ -109,13 +109,15 @@ export default {
 
   data() {
     return {
-      inputStudentID: "",
-      inputId: "",
-      inputNickName: "",
-      inputPW: "",
-      inputCPW: "",
-      selectEmployment: "none",
-      selectCategory: "none",
+      user: {
+        inputStudentID: "",
+        inputId: "",
+        inputNickName: "",
+        inputPW: "",
+        inputCPW: "",
+        selectEmployment: "none",
+        selectCategory: "none",
+      },
     };
   },
 
@@ -125,7 +127,7 @@ export default {
     },
 
     memberAdd() {
-      const postData = {
+      const signupMember = {
         studentID: this.inputStudentID,
         id: this.inputId,
         nickname: this.inputNickName,
@@ -171,7 +173,7 @@ export default {
         return false;
       }
 
-      //회원가입 완료
+      //회원가입 버튼 누르면
       if (
         this.inputStudentID &&
         this.inputId &&
@@ -179,15 +181,15 @@ export default {
         this.inputPW
       ) {
         axios
-          .post("/api/members", postData)
+          .post("/api/signup", signupMember)
           .then((res) => {
-            // API 요청 성공 시 처리할 내용
-            console.log(res.data); // 서버로부터의 응답 데이터 출력
+            console.log(res.data);
+            console.log(res);
             alert("회원가입이 완료되었습니다.");
             this.$router.push("/login");
           })
           .catch((error) => {
-            // API 요청 실패 시 처리할 내용
+            alert("회원가입을 다시 진행해주세요.");
             console.error(error); // 에러 메시지 출력
           });
       }
