@@ -14,7 +14,7 @@
     </div>
 
     <div class="loginWithSignupBox">
-      <span v-if="isLoggedIn">
+      <span v-if="loginSuccess">
         <!--로그인 시-->
         <a @click="logout" class="loginWithSignupMenu">로그아웃</a> |
         <router-link to="/myPage" class="loginWithSignupMenu"
@@ -38,16 +38,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isLoggedIn: true, // 기본 상태
-    };
-  },
-
   methods: {
     logout() {
-      this.isLoggedIn = false;
-      this.$router.push("/"); //홈화면으로
+      this.$store.commit("logout");
+      this.$router.push("/");
     },
   },
 };

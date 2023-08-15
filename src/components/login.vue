@@ -4,7 +4,6 @@
       <div class="signUp">
         <img src="../assets/logo.png" />
       </div>
-
       <div class="projectName">
         <b><span style="color: #000080; font-size: 28px">취</span></b>
         <b><span style="color: #ffd700; font-size: 28px">얼업</span></b>
@@ -12,7 +11,7 @@
       <!--여기서부터 지워야하는 부분-->
       <p>
         <br />
-        임시 data<br />id: "user", password: "0000" <br />id: "admin", password:
+        임시 data<br />id: "user", pw: "0000" <br />id: "admin", password:
         "1234"<br />
       </p>
       <!--여기까지 지워야하는 부분-->
@@ -22,8 +21,8 @@
         <input
           class="loginInput"
           type="text"
-          id="id"
-          v-model="id"
+          id="userId"
+          v-model="userId"
           placeholder="아이디를 입력해주세요"
           @keyup.enter="login"
         />
@@ -34,8 +33,8 @@
         <input
           class="loginInput"
           type="password"
-          id="password"
-          v-model="password"
+          id="userPw"
+          v-model="userPw"
           placeholder="비밀번호를 입력하세요"
           @keyup.enter="login"
         />
@@ -57,18 +56,16 @@ export default {
 
   data() {
     return {
-      user: {
-        id: "",
-        password: "",
-      },
+      userId: "",
+      userPw: "",
 
-      // 임시회원db
       users: [
-        { id: "user", password: "0000" },
-        { id: "admin", password: "1234" },
+        { userId: "user", userPw: "0000" },
+        { userId: "admin", userPw: "1234" },
       ],
     };
   },
+
   components: {
     // eslint-disable-next-line
     cheerupHeader,
@@ -76,46 +73,53 @@ export default {
 
   methods: {
     login() {
-      const ID = this.id;
-      const PW = this.password;
+      let saveData = { userId: this.userId, userPw: this.userPw };
 
-      if (ID === "") {
+      if (saveData.userId === "") {
         alert("아이디를 입력해주세요");
         return;
       }
-      if (PW === "") {
+      if (saveData.userPw === "") {
         alert("비밀번호를 입력해주세요");
         return;
       }
 
-      if (ID !== "" && PW !== "") {
-        const user = this.users.find((user) => user.id === ID);
+      const foundUser = this.users.find(
+        (user) =>
+          user.userId === saveData.userId && user.userPw === saveData.userPw
+      );
 
-        if (user && user.password === PW) {
-          axios
-            .post("/api/login", {
-              user: this.user,
-            })
+      if (foundUser) {
+        axios
+          .post("http://localhost:3000/api/login", {
+            userId: saveData.userId,
+            userPw: saveData.userPw,
+          })
 
-            .then(() => {
+          .then((res) => {
+            if (res.status === 200) {
               alert("로그인이 완료되었습니다.");
-              console.log(user);
+              // console.log(user);
 
-              //헤더 변경을 위한 처리..
-              this.isLoggedIn = true;
-              console.log(this.isLoggedIn);
+              //store로 로그인 상태 보내기
+              this.$store.commit("addOne");
+
+              this.$store.commit("login", {
+                userId: saveData.userId,
+                token: res.data.token,
+              });
 
               //화면이동
               this.$router.push("/");
-            })
+            }
+          })
 
-            .catch((error) => {
-              alert("로그인에 실패하였습니다.");
-              console.error(error);
-            });
-        } else {
-          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-        }
+          .catch((error) => {
+            alert("로그인에 실패하였습니다.");
+            console.error(error);
+          });
+      } else {
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
       }
     },
   },

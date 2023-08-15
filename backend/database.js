@@ -1,4 +1,6 @@
 const database = require("./database");
+const express = require("express");
+const router = express.Router();
 
 // ...
 
@@ -23,7 +25,7 @@ async function signupUser(userData) {
 
 //router
 
-router.post("/signUp", function (req, res) {
+router.post("/signup", function (req, res) {
   const user = {
     studentID: req.body.user.studentID,
     id: req.body.user.id,
@@ -35,8 +37,8 @@ router.post("/signUp", function (req, res) {
 
 router.post("/login", function (req, res) {
   const user = {
-    id: req.body.user.id,
-    password: req.body.user.password,
+    userId: req.body.user.userId,
+    userPw: req.body.user.userPw,
   };
   connection.query(
     'SELECT id, password FROM users WHERE id = "' + user.id + '"',
@@ -45,7 +47,7 @@ router.post("/login", function (req, res) {
         res.json({
           // 매칭되는 아이디 없을 경우
           success: false,
-          message: "Login failed please check your id or password!",
+          message: "아이디나 비번확인!",
         });
       }
       if (row[0] !== undefined && row[0].id === user.id) {
