@@ -2,9 +2,12 @@
   <!-- myPageMain부분 코드 -->
   <div class="myPageMain">
     <div class="myPageCard">
+      <div class="logo">
+        <img src="../assets/logo.png" />
+        <h2 class="myPageTitle" style="color: #000080">내 정보</h2>
+      </div>
+      <hr />
       <div class="myPageCardContents">
-        <h2 class="myPageTitle">내 정보</h2>
-        <hr />
         <table class="myPageTable">
           <tr>
             <th>닉네임</th>

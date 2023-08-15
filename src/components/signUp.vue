@@ -238,7 +238,8 @@ export default {
 .inputCard .input {
   width: 100%;
   height: 100%;
-  border: 1px solid rgb(191, 191, 191);
+  border: 0px;
+  border-bottom: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
   padding-left: 3%;
 }

@@ -158,7 +158,8 @@ export default {
 .loginInput {
   width: 100%;
   height: 100%;
-  border: 1px solid #e2e2e2;
+  border: 0px;
+  border-bottom: 1px solid rgb(191, 191, 191);
   border-radius: 2px;
   padding-left: 3%;
 }
