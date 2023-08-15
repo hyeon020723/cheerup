@@ -49,10 +49,12 @@
 </template>
 
 <script>
-import cheerupHeader from "@/layout/cheerupHeader.vue";
+import cheerupHeader from "@/components/cheerupHeader.vue";
+import axios from "axios";
 
 export default {
   name: "cheerupLogin",
+
   data() {
     return {
       user: {
@@ -90,10 +92,27 @@ export default {
         const user = this.users.find((user) => user.id === ID);
 
         if (user && user.password === PW) {
-          this.$emit("login"); // 로그인 성공 이벤트 발생
+          axios
+            .post("/api/login", {
+              user: this.user,
+            })
 
-          alert("로그인이 완료되었습니다.");
-          console.log(user);
+            .then(() => {
+              alert("로그인이 완료되었습니다.");
+              console.log(user);
+
+              //헤더 변경을 위한 처리..
+              this.isLoggedIn = true;
+              console.log(this.isLoggedIn);
+
+              //화면이동
+              this.$router.push("/");
+            })
+
+            .catch((error) => {
+              alert("로그인에 실패하였습니다.");
+              console.error(error);
+            });
         } else {
           alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         }

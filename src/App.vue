@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import cheerupHeader from "./layout/cheerupHeader.vue";
-import cheerupFooter from "./layout/cheerupFooter.vue";
+import cheerupHeader from "./components/cheerupHeader.vue";
+import cheerupFooter from "./components/cheerupFooter.vue";
 
 export default {
   name: "App",

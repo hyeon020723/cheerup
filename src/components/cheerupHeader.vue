@@ -22,7 +22,7 @@
         >
       </span>
 
-      <span v-if="!isLoggedIn">
+      <span v-else>
         <router-link to="/login" class="loginWithSignupMenu"
           >로그인</router-link
         >
@@ -45,15 +45,9 @@ export default {
   },
 
   methods: {
-    login() {
-      this.isLoggedIn = true;
-
-      this.$router.push("/");
-    },
-
     logout() {
       this.isLoggedIn = false;
-      this.$router.push("/");
+      this.$router.push("/"); //홈화면으로
     },
   },
 };

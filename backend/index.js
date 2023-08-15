@@ -21,7 +21,7 @@ app.post("/api/signup", async (req, res) => {
   await database.run(
     `INSERT INTO members (studentID, id, nickname, password) VALUES ('${req.body.content.studentID}','${req.body.content.id}','${req.body.content.nickname}','${req.body.content.password}')`
   );
-  res.send();
+  res.send("");
 });
 
 //
@@ -31,7 +31,14 @@ app.post("/api/signup", async (req, res) => {
 
 //
 //로그인
-
+app.post("/api/login", async (req, res) => {
+  await database.get(
+    //가져오는 정보
+    `SELECT * FROM members WHERE id = id AND password = password`,
+    [id, password]
+  );
+  res.send("");
+});
 //
 //
 //

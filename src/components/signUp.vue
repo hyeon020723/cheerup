@@ -127,18 +127,18 @@ export default {
     },
 
     memberAdd() {
-      const signupMember = {
-        studentID: this.inputStudentID,
-        id: this.inputId,
-        nickname: this.inputNickName,
-        password: this.inputPW,
-        employment: this.selectEmployment,
-        Category: this.selectCategory,
-      };
+      // const signupMember = {
+      //   studentID: this.inputStudentID,
+      //   id: this.inputId,
+      //   nickname: this.inputNickName,
+      //   password: this.inputPW,
+      //   employment: this.selectEmployment,
+      //   Category: this.selectCategory,
+      // };
 
       const CheckPW = this.inputCPW;
 
-      //공란 확인
+      // 공란 확인
 
       if (this.inputStudentID === "") {
         alert("학번을 입력하세요.");
@@ -173,7 +173,8 @@ export default {
         return false;
       }
 
-      //회원가입 버튼 누르면
+      // 모든 칸에 입력 값이 있을 때 회원가입 진행
+
       if (
         this.inputStudentID &&
         this.inputId &&
@@ -181,16 +182,22 @@ export default {
         this.inputPW
       ) {
         axios
-          .post("/api/signup", signupMember)
+          .post("/api/signUp", {
+            user: this.user,
+          })
+          //   .post("/api/signup", signupMember)
+
           .then((res) => {
             console.log(res.data);
             console.log(res);
             alert("회원가입이 완료되었습니다.");
             this.$router.push("/login");
           })
+
+          // 에러 시
           .catch((error) => {
             alert("회원가입을 다시 진행해주세요.");
-            console.error(error); // 에러 메시지 출력
+            console.error(error);
           });
       }
     },
