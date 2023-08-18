@@ -11,8 +11,7 @@
       <!--여기서부터 지워야하는 부분-->
       <p>
         <br />
-        임시 data<br />id: "user", pw: "0000" <br />id: "admin", password:
-        "1234"<br />
+        임시 data<br />id: "user", pw: "0000" <br />
       </p>
       <!--여기까지 지워야하는 부분-->
 
@@ -58,11 +57,6 @@ export default {
     return {
       userId: "",
       userPw: "",
-
-      users: [
-        { userId: "user", userPw: "0000" },
-        { userId: "admin", userPw: "1234" },
-      ],
     };
   },
 
@@ -73,7 +67,10 @@ export default {
 
   methods: {
     login() {
-      let saveData = { userId: this.userId, userPw: this.userPw };
+      let saveData = {};
+
+      saveData.userId = this.userId;
+      saveData.userPw = this.userPw;
 
       if (saveData.userId === "") {
         alert("아이디를 입력해주세요");
@@ -84,43 +81,29 @@ export default {
         return;
       }
 
-      const foundUser = this.users.find(
-        (user) =>
-          user.userId === saveData.userId && user.userPw === saveData.userPw
-      );
+      axios
+        .post("http://localhost:3000/api/login", JSON.stringify(saveData), {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
 
-      if (foundUser) {
-        axios
-          .post("http://localhost:3000/api/login", {
-            userId: saveData.userId,
-            userPw: saveData.userPw,
-          })
+        .then((res) => {
+          if (res.status === 200) {
+            alert("로그인이 완료되었습니다.");
+            // console.log(user);
 
-          .then((res) => {
-            if (res.status === 200) {
-              alert("로그인이 완료되었습니다.");
-              // console.log(user);
+            //store로 로그인 상태
+            this.$store.commit("login", res.data);
 
-              //store로 로그인 상태 보내기
-              this.$store.commit("addOne");
-
-              this.$store.commit("login", {
-                userId: saveData.userId,
-                token: res.data.token,
-              });
-
-              //화면이동
-              this.$router.push("/");
-            }
-          })
-
-          .catch((error) => {
-            alert("로그인에 실패하였습니다.");
-            console.error(error);
-          });
-      } else {
-        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-      }
+            //화면이동
+            this.$router.push("/");
+          }
+        })
+        .catch((error) => {
+          alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+          console.error(error);
+        });
     },
   },
 };
