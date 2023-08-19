@@ -15,18 +15,34 @@ app.get("/", (req, res) => {
   res.send("여기는 루트입니다");
 });
 
+//
+//
+//
 // 회원가입
 app.post("/api/signup", async (req, res) => {
   const userData = req.body.user;
-  try {
-    await signupUser(userData);
-    res.send("");
-  } catch (error) {
-    console.error("Error signing up:", error);
-    res.status(500).json({ message: "error" });
-  }
+
+  axios
+    .post("http://localhost:8081/auth/login", {
+      user: user,
+    })
+    .then((res) => {
+      if (response.status === 200) {
+        // 회원 가입 성공 시 알림 및 로그인 페이지로 이동
+        console.log("회원 가입 성공:", response.data);
+        alert("회원가입이 완료되었습니다.");
+        this.$router.push("/login");
+      }
+    })
+    .catch((error) => {
+      console.error("회원 가입 에러:", error);
+      alert("회원가입을 다시 진행해주세요.");
+    });
 });
 
+//
+//
+//
 // 로그인
 app.post(
   "/api/login",

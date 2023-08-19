@@ -82,10 +82,9 @@ export default {
       }
 
       axios
-        .post("http://localhost:3000/api/login", JSON.stringify(saveData), {
-          headers: {
-            "Content-Type": `application/json`,
-          },
+        .post("http://localhost:3000/api/login", {
+          userId: saveData.userId,
+          userPw: saveData.userPw,
         })
 
         .then((res) => {

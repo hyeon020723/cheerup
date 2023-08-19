@@ -66,7 +66,6 @@
             <p>취업 상태 :</p>
 
             <select class="employment" v-model="selectEmployment">
-              <option value="none">-</option>
               <option value="취업">취업</option>
               <option value="취업준비">취업준비</option>
             </select>
@@ -75,7 +74,7 @@
           <div class="dropdown">
             <p>분야 :</p>
             <select class="category" v-model="selectCategory">
-              <option value="none">-</option>
+              <option value="none">취업준비</option>
               <option value="개발">개발</option>
               <option value="경영마케팅">경영마케팅</option>
               <option value="제조업">제조업</option>
@@ -90,7 +89,7 @@
           </div>
         </div>
         <div class="dropdownGuide">
-          <p>취업상태가 준비인 분들은 분야를 선택하지 않아도 됩니다.</p>
+          <p>취업상태가 준비인 분들은 분야를 취업준비로 선택해주세요.</p>
         </div>
 
         <div class="submit">
@@ -173,7 +172,7 @@ export default {
         return false;
       }
 
-      // 모든 칸에 입력 값이 있을 때 회원가입 진행
+      // 모든 칸에 입력 값이 있을 경우
 
       if (
         this.inputStudentID &&
@@ -182,22 +181,22 @@ export default {
         this.inputPW
       ) {
         axios
-          .post("/api/signUp", {
+          .post("/api/signup", {
             user: this.user,
           })
           //   .post("/api/signup", signupMember)
 
           .then((res) => {
             console.log(res.data);
-            console.log(res);
-            alert("회원가입이 완료되었습니다.");
             this.$router.push("/login");
+            alert("환영합니다.");
           })
 
           // 에러 시
           .catch((error) => {
             alert("회원가입을 다시 진행해주세요.");
             console.error(error);
+            // this.$router.push("/signup");
           });
       }
     },
