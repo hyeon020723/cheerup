@@ -29,6 +29,7 @@ export default createStore({
       state.loginSuccess = false;
     },
   },
+
   actions: {
     // 회원 가입 액션
     async signup({ commit }, userData) {

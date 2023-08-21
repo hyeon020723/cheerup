@@ -31,46 +31,35 @@ app.post("/api/signup", async (req, res) => {
   //   res.status(500).json({ message: "회원가입을 다시 진행해주세요." });
   // }
 
-  // res.send(user);
+  res.send(user);
 });
 
 //
 //
 //
 // 로그인
-app.post(
-  "/api/login",
-  async (req, res) => {
-    const userId = req.body.userId;
-    const userPw = req.body.userPw;
+app.post("/api/login", async (req, res) => {
+  const userId = req.body.userId;
+  const userPw = req.body.userPw;
 
-    // try {
-    //   const result = await database.runQuery(
-    //     "SELECT * FROM members WHERE id = ?",
-    //     [user.userId]
-    //   );
-    axios // axios로 post 요청보냄
-      .post("http://localhost:8081/auth/login", {
-        userId: id,
-        password: pw,
-      }) // res를 받아서 사용. res.data에 받은 data 있음. store의 login 메소드를 호출해서 store에 userId랑 token 값 넣어줌
-      .then((res) => {
-        if (res.status === 200) {
-          this.$store.commit("login", res.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  // try {
+  //   const result = await database.runQuery(
+  //     "SELECT * FROM members WHERE id = ?",
+  //     [user.userId]
+  //   );
+
+  if (userId === "user" && userPw === "0000") {
+    res.status(200).send({ message: "로그인이 완료되었습니다." });
+  } else {
+    res
+      .status(401)
+      .send({ message: "아이디 또는 비밀번호가 일치하지 않습니다." });
   }
-  // if문 수정필요
-  //   if (userId.length > 0 && userPw.length > 2) {
-  //     res.status(200).json({ message: "로그인 성공", token: "yourAuthToken" });
-  //   } else {
-  //     res.status(401).json({ message: "Invalid login credentials" });
-  //   }
-  // }
-);
+});
+
+//
+//
+// 게시물
 
 // 서버
 app.listen(port, () => {

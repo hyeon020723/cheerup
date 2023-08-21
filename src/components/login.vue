@@ -23,7 +23,7 @@
           id="userId"
           v-model="userId"
           placeholder="아이디를 입력해주세요"
-          @keyup.enter="login"
+          @keyup.enter="login()"
         />
       </div>
 
@@ -35,12 +35,12 @@
           id="userPw"
           v-model="userPw"
           placeholder="비밀번호를 입력하세요"
-          @keyup.enter="login"
+          @keyup.enter="login()"
         />
       </div>
 
       <div class="login">
-        <button id="loginBtn" @click="login">로그인</button>
+        <button id="loginBtn" @click="login()">로그인</button>
       </div>
     </div>
   </div>
@@ -67,10 +67,7 @@ export default {
 
   methods: {
     login() {
-      let saveData = {};
-
-      saveData.userId = this.userId;
-      saveData.userPw = this.userPw;
+      const saveData = { userId: this.userId, userPw: this.userPw };
 
       if (saveData.userId === "") {
         alert("아이디를 입력해주세요");
@@ -82,7 +79,7 @@ export default {
       }
 
       axios
-        .post("http://localhost:3000/api/login", {
+        .post("/api/login", {
           userId: saveData.userId,
           userPw: saveData.userPw,
         })
@@ -90,10 +87,9 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             alert("로그인이 완료되었습니다.");
-            // console.log(user);
 
-            //store로 로그인 상태
-            this.$store.commit("login", res.data);
+            //store로 로그인 상태 ==> 문제발생
+            // this.$store.commit("login", res.data);
 
             //화면이동
             this.$router.push("/");
