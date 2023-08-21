@@ -59,6 +59,14 @@ CREATE TABLE IF NOT EXISTS `cheerup`.`review_info` (
 ENGINE = InnoDB;
 
 
+-- 임시 게시물
+INSERT INTO review_info (pageNumber, content, title, uploadDate, nickName, file)
+VALUES
+    (1, '첫 번째 게시물 내용', '첫 번째 게시물 제목', '2023-08-17 10:00:00', '임시유저', NULL),
+    (2, '두 번째 게시물 내용', '두 번째 게시물 제목', '2023-08-18 14:30:00', '임시유저', NULL),
+    (3, '세 번째 게시물 내용', '세 번째 게시물 제목', '2023-08-19 16:45:00', '임시유저', NULL);
+
+
 -- -----------------------------------------------------
 -- Table `cheerup`.`member_widthdraw`
 -- -----------------------------------------------------

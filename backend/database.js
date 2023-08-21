@@ -23,8 +23,7 @@ async function signupUser(userData) {
   }
 }
 
-//router
-
+//회원가입
 router.post("/signup", function (req, res) {
   const user = {
     studentID: req.body.user.inputStudentID,
@@ -35,6 +34,7 @@ router.post("/signup", function (req, res) {
   connection.query('SELECT id FROM members WHERE id = "' + user.id + '"');
 });
 
+//로그인
 router.post("/login", function (req, res) {
   const user = {
     userId: req.body.user.userId,

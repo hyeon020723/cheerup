@@ -27,16 +27,20 @@
             </tr>
           </thead>
           <tbody>
-            <!-- 게시글을 최근 작성 순서대로 표시 -->
+            <!-- <tr v-for="(post, index) in paginatedPosts" :key="index" class="post">
+        <td>{{ post.title }}</td>
+        <td>{{ post.nickName }}</td>
+        <td class="centered">{{ formatDate(post.uploadDate) }}</td>
+        <td class="centered">{{ post.views }}</td>
+      </tr> -->
             <tr
               v-for="(post, index) in paginatedPosts"
               :key="index"
               class="post"
-              @click="goToReviewRead(post.link)"
             >
               <td>{{ post.title }}</td>
-              <td>{{ post.author }}</td>
-              <td class="centered">{{ post.date }}</td>
+              <td>{{ post.nickName }}</td>
+              <td class="centered">{{ formatDate(post.uploadDate) }}</td>
               <td class="centered">{{ post.views }}</td>
             </tr>
           </tbody>
@@ -95,124 +99,125 @@ export default {
   data() {
     return {
       posts: [
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-          link: " ",
-        },
-        {
-          title: "취업 후기 게시물 2",
-          author: "작성자2",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 2",
-          author: "작성자2",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 2",
-          author: "작성자2",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 2",
-          author: "작성자2",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 2",
-          author: "작성자2",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물",
-          author: "이의찬",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물",
-          author: "김시은",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자1",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물",
-          author: "정수환",
-          date: "2023-07-31",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물 1",
-          author: "작성자2",
-          date: "2023-07-30",
-          views: 0,
-        },
-        {
-          title: "취업 후기 게시물",
-          author: "임가현",
-          date: "2023-07-31",
-          views: 0,
-        },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //     link: " ",
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 2",
+        //     author: "작성자2",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 2",
+        //     author: "작성자2",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 2",
+        //     author: "작성자2",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 2",
+        //     author: "작성자2",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 2",
+        //     author: "작성자2",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물",
+        //     author: "이의찬",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물",
+        //     author: "김시은",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자1",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물",
+        //     author: "정수환",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물 1",
+        //     author: "작성자2",
+        //     date: "2023-07-30",
+        //     views: 0,
+        //   },
+        //   {
+        //     title: "취업 후기 게시물",
+        //     author: "임가현",
+        //     date: "2023-07-31",
+        //     views: 0,
+        //   },
       ],
       currentPage: 1,
       postsPerPage: 15,
     };
   },
+
   computed: {
+    // 페이지 관리
     sortedPosts() {
       return this.posts.slice().sort((a, b) => {
-        // 작성일 기준 내림차순
         return new Date(b.date) - new Date(a.date);
       });
     },
@@ -224,8 +229,29 @@ export default {
       const endIndex = startIndex + this.postsPerPage;
       return this.sortedPosts.slice(startIndex, endIndex);
     },
+    // mounted() {
+    //   this.fetchPosts();
+    // },
   },
+
   methods: {
+    async fetchPosts() {
+      try {
+        const response = await fetch("/api/reviewlist");
+        const data = await response.json();
+        console.log(data);
+        this.posts = data;
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    },
+
+    // formatDate(dateString) {
+    //   const date = new Date(dateString);
+    //   return date.toLocaleDateString();
+    // },
+
+    //page
     changePage(page) {
       if (page >= 1 && page <= this.totalPages) {
         this.currentPage = page;

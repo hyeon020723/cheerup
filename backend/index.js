@@ -1,16 +1,16 @@
 const express = require("express");
-const cors = require("cors");
 const bodyParser = require("body-parser");
-
-const database = require("./database"); // Assuming you have a database.js file
-
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json());
-app.use(cors());
+const db = require("./database");
 
-// Root route
+app.use(bodyParser.json());
+
+//
+//
+//
+// root
 app.get("/", (req, res) => {
   res.send("여기는 백엔드입니다.");
 });
@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 app.post("/api/signup", async (req, res) => {
   const user = req.body.user;
 
+  // DB에 추가 해야돼 !!!!!!!
   // try {
   //   await signupUser(user);
   //   res.status(201).json({ message: "회원가입이 완료되었습니다." });
@@ -59,8 +60,29 @@ app.post("/api/login", async (req, res) => {
 
 //
 //
+//
 // 게시물
 
+app.get("/api/reviewlist", async (req, res) => {
+  const query = "SELECT * FROM review_info";
+
+  try {
+    const results = await database.runQuery(query);
+    res.send(results);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
+//게시물 업로드
+app.post("/api/reviewupload", async (req, res) => {
+  const title = req.body.title;
+  const content = req.body.content;
+  res.send({ title, content });
+});
+//
+//
 // 서버
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

@@ -5,23 +5,22 @@
     </div>
 
     <div class="reviewBox">
-      <div class="titleBox">제목이 입력될 부분입니다</div>
+      <div class="titleBox">{{ review.title }}</div>
       <div class="tableBox">
         <table>
           <tr>
             <th>작성자</th>
-            <td>닉네임</td>
+            <td>{{ review.nickName }}</td>
           </tr>
           <tr>
             <th>게시일자</th>
-            <td>2222년2월22일22시22분</td>
+            <td>{{ review.uploadDate }}</td>
           </tr>
         </table>
       </div>
       <!--tableBox div end-->
       <div class="contentBox">
-        내용이 들어갈 부분입니다 <Br /> 내용이 들어갈 부분입니다 <Br />
-        내용이 들어갈 부분입니다
+        {{ review.content }}
       </div>
     </div>
     <!--reviewBox div end-->
@@ -40,9 +39,30 @@
 export default {
   name: "reviewRead",
   data() {
-    return {};
+    return {
+      review: {},
+    };
   },
-  methods: {},
+
+  methods: {
+    created() {
+      this.fetchReview();
+    },
+
+    async fetchReview() {
+      try {
+        const response = await fetch("/api/review");
+        const data = await response.json();
+        this.review = data;
+      } catch (error) {
+        console.error("Error fetching review:", error);
+      }
+    },
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString();
+    },
+  },
 };
 </script>
 

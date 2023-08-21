@@ -5,15 +5,20 @@
 
     <div class="middleBox">
       <div class="writeContents">
-        <input placeholder="제목을 입력해 주세요." class="textareaInput" />
+        <input
+          placeholder="제목을 입력해 주세요."
+          class="textareaInput"
+          v-model="title"
+        />
         <textarea
           placeholder="내용을 입력해 주세요."
           class="mainContent"
+          v-model="content"
         ></textarea>
       </div>
-      <div class="attachBox">
+      <!-- <div class="attachBox">
         <input type="file" class="fileInput" />
-      </div>
+      </div> -->
     </div>
     <!--middleBox div end-->
 
@@ -28,14 +33,32 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "reviewUpload",
+  data() {
+    return { title: "", content: "" };
+  },
+
   methods: {
     uploadDecision() {
       if (confirm("작성한 글을 게시하시겠습니까?")) {
         //네를 누르면 게시
-        alert("글을 게시하였습니다");
-        this.$router.push("review");
+
+        axios
+          .post("/api/reviewupload", {
+            title: this.title,
+            content: this.content,
+          })
+          .then((res) => {
+            console.log(res.data);
+            alert("글을 게시하였습니다");
+            this.$router.push("review");
+          })
+          .catch((error) => {
+            console.error("Error uploading review:", error);
+          });
 
         //취소를 누르면 유지
       } else {
