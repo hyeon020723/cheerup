@@ -2,7 +2,7 @@ const database = require("./database");
 const express = require("express");
 const router = express.Router();
 
-// ...
+//
 
 async function signupUser(userData) {
   const query = `
@@ -27,10 +27,10 @@ async function signupUser(userData) {
 
 router.post("/signup", function (req, res) {
   const user = {
-    studentID: req.body.user.studentID,
-    id: req.body.user.id,
-    nickname: req.body.user.nickname,
-    password: req.body.user.password,
+    studentID: req.body.user.inputStudentID,
+    id: req.body.user.inputId,
+    nickname: req.body.user.inputNickName,
+    password: req.body.user.inputPW,
   };
   connection.query('SELECT id FROM members WHERE id = "' + user.id + '"');
 });
@@ -40,6 +40,7 @@ router.post("/login", function (req, res) {
     userId: req.body.user.userId,
     userPw: req.body.user.userPw,
   };
+
   connection.query(
     'SELECT id, password FROM users WHERE id = "' + user.id + '"',
     function (err, row) {

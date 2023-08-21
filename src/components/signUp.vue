@@ -17,7 +17,7 @@
             class="input"
             id="inputStudentID"
             placeholder="학번을 입력하세요 *"
-            v-model="inputStudentID"
+            v-model="user.inputStudentID"
           />
         </div>
 
@@ -26,7 +26,7 @@
             class="input"
             id="inputId"
             placeholder="아이디를 입력하세요 * "
-            v-model="inputId"
+            v-model="user.inputId"
           />
           <button id="duplicateCheckBtn" @click="duplicateCheck">
             중복확인
@@ -38,7 +38,7 @@
             class="input"
             id="inputNickName"
             placeholder="사용하실 닉네임을 입력하세요 *"
-            v-model="inputNickName"
+            v-model="user.inputNickName"
           />
         </div>
 
@@ -47,7 +47,7 @@
             class="input"
             id="inputPW"
             placeholder="비밀번호를 입력하세요 *"
-            v-model="inputPW"
+            v-model="user.inputPW"
           />
         </div>
 
@@ -56,7 +56,7 @@
             class="input"
             id="inputCPW"
             placeholder="비밀번호를 다시한번 입력하세요 *"
-            v-model="inputCPW"
+            v-model="user.inputCPW"
           />
           <!-- 비밀번호확인 입력 공간 -->
         </div>
@@ -65,7 +65,7 @@
           <div class="dropdown">
             <p>취업 상태 :</p>
 
-            <select class="employment" v-model="selectEmployment">
+            <select class="employment" v-model="user.selectEmployment">
               <option value="취업">취업</option>
               <option value="취업준비">취업준비</option>
             </select>
@@ -73,7 +73,7 @@
 
           <div class="dropdown">
             <p>분야 :</p>
-            <select class="category" v-model="selectCategory">
+            <select class="category" v-model="user.selectCategory">
               <option value="none">취업준비</option>
               <option value="개발">개발</option>
               <option value="경영마케팅">경영마케팅</option>
@@ -93,7 +93,7 @@
         </div>
 
         <div class="submit">
-          <button id="submitBtn" @click="memberAdd">가입하기</button>
+          <button id="submitBtn" @click="memberAdd()">가입하기</button>
         </div>
       </form>
     </div>
@@ -114,8 +114,8 @@ export default {
         inputNickName: "",
         inputPW: "",
         inputCPW: "",
-        selectEmployment: "none",
-        selectCategory: "none",
+        selectEmployment: "",
+        selectCategory: "",
       },
     };
   },
@@ -126,48 +126,48 @@ export default {
     },
 
     memberAdd() {
-      // const signupMember = {
-      //   studentID: this.inputStudentID,
-      //   id: this.inputId,
-      //   nickname: this.inputNickName,
-      //   password: this.inputPW,
-      //   employment: this.selectEmployment,
-      //   Category: this.selectCategory,
-      // };
-
-      const CheckPW = this.inputCPW;
+      const userData = {
+        StudentID: this.user.inputStudentID,
+        Id: this.user.inputId,
+        Pw: this.user.inputPW,
+        CPW: this.user.inputCPW,
+        Employment: this.user.selectEmployment,
+        Category: this.user.selectCategory,
+      };
 
       // 공란 확인
-
-      if (this.inputStudentID === "") {
+      if (this.user.inputStudentID === "") {
         alert("학번을 입력하세요.");
         return false;
       }
-      if (this.inputId === "") {
+      if (this.user.inputId === "") {
         alert("아이디를 입력하세요.");
         return false;
       }
-      if (this.inputNickName === "") {
+      if (this.user.inputNickName === "") {
         alert("닉네임을 입력하세요.");
         return false;
       }
-      if (this.inputPW === "") {
+      if (this.user.inputPW === "") {
         alert("비밀번호를 입력하세요.");
         return false;
       }
-      if (CheckPW === "") {
+      if (this.user.inputCPW === "") {
         alert("비밀번호를 다시한번 입력하세요.");
         return false;
       }
-      if (this.inputPW != CheckPW) {
+      if (this.user.inputPW !== this.user.inputCPW) {
         alert("비밀번호가 일치하지않습니다.");
         return false;
       }
-      if (this.selectEmployment === "none") {
+      if (this.user.selectEmployment === "none") {
         alert("취업상태를 선택하세요.");
         return false;
       }
-      if (this.selectEmployment === "취업" && this.selectCategory === "none") {
+      if (
+        this.user.selectEmployment === "취업" &&
+        this.user.selectCategory === "none"
+      ) {
         alert("분야를 선택하세요.");
         return false;
       }
@@ -175,16 +175,13 @@ export default {
       // 모든 칸에 입력 값이 있을 경우
 
       if (
-        this.inputStudentID &&
-        this.inputId &&
-        this.inputNickName &&
-        this.inputPW
+        this.user.inputStudentID &&
+        this.user.inputId &&
+        this.user.inputNickName &&
+        this.user.inputPW
       ) {
         axios
-          .post("/api/signup", {
-            user: this.user,
-          })
-          //   .post("/api/signup", signupMember)
+          .post("/api/signup", { user: userData })
 
           .then((res) => {
             console.log(res.data);
@@ -198,6 +195,8 @@ export default {
             console.error(error);
             // this.$router.push("/signup");
           });
+
+        return {};
       }
     },
   },
