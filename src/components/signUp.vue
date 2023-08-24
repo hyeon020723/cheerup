@@ -60,7 +60,7 @@
           />
           <!-- 비밀번호확인 입력 공간 -->
         </div>
-
+        <!-- 
         <div class="inputCard">
           <div class="dropdown">
             <p>취업 상태 :</p>
@@ -90,7 +90,7 @@
         </div>
         <div class="dropdownGuide">
           <p>취업상태가 준비인 분들은 분야를 취업준비로 선택해주세요.</p>
-        </div>
+        </div> -->
 
         <div class="submit">
           <button id="submitBtn" @click="memberAdd()">가입하기</button>

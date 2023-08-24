@@ -26,7 +26,7 @@
     <!--reviewBox div end-->
 
     <div class="listButtonBox">
-      <router-link to="/review" class="menu">
+      <router-link to="/reviewlist" class="menu">
         <button>목록</button></router-link
       >
     </div>
@@ -45,19 +45,27 @@ export default {
   },
 
   methods: {
-    created() {
-      this.fetchReview();
+    async created() {
+      await this.fetchReview();
     },
 
     async fetchReview() {
+      const pageNumber = 1; // Modify this to match the desired page number
       try {
-        const response = await fetch("/api/review");
-        const data = await response.json();
-        this.review = data;
+        const response = await fetch(
+          `/api/reviewread?pageNumber=${pageNumber}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          this.review = data;
+        } else {
+          console.error("Error fetching review:", response.statusText);
+        }
       } catch (error) {
         console.error("Error fetching review:", error);
       }
     },
+
     formatDate(dateString) {
       const date = new Date(dateString);
       return date.toLocaleString();

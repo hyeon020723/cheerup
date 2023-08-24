@@ -10,7 +10,7 @@
 
     <div class="mainMenuBox">
       <router-link to="/info" class="mainMenu">채용 정보</router-link> |
-      <router-link to="/review" class="mainMenu">취업 후기</router-link>
+      <router-link to="/reviewlist" class="mainMenu">취업 후기</router-link>
     </div>
 
     <div class="loginWithSignupBox">

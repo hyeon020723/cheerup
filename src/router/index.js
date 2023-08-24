@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import info from "@/components/infoPage.vue";
-import review from "@/components/reviewPage.vue";
+import reviewlist from "@/components/reviewPage.vue";
 import login from "@/components/login.vue";
 import signup from "@/components/signUp.vue";
 import myPage from "@/components/myPage.vue";
@@ -22,9 +22,9 @@ const routes = [
     component: info,
   },
   {
-    path: "/review",
-    name: "review",
-    component: review,
+    path: "/reviewlist",
+    name: "reviewlist",
+    component: reviewlist,
   },
   {
     path: "/login",

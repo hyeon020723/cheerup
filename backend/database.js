@@ -3,6 +3,69 @@ const express = require("express");
 const router = express.Router();
 
 //
+// const mysql = require("mysql");
+
+// const connection = mysql.createConnection({
+//   host: "hostname",
+//   user: "user",
+//   password: "password",
+//   database: "database_name",
+// });
+
+// connection.connect((error) => {
+//   if (error) {
+//     console.error("Error connecting to MySQL:", error);
+//     // Handle the error appropriately
+//   } else {
+//     console.log("Connected to MySQL successfully");
+//     // Continue with your application logic
+//   }
+// });
+
+// connection.connect();
+
+// connection.query("SELECT * from member", function (error, results, fields) {
+//   if (error) throw error;
+//   console.log("member:", results);
+// });
+
+// connection.end();
+
+// // const mariadb = require("mariadb");
+// // const pool = mariadb.createPool({
+// //   host: "host",
+// //   user: "Jeong",
+// //   password: "20000529",
+// //   connectionLimit: 5,
+// //   database: "db",
+// // });
+
+// module.exports = {
+//   async run(query, params) {
+//     return new Promise((resolve, reject) => {
+//       pool
+//         .getConnection()
+//         .then((conn) => {
+//           conn
+//             .query(query, params)
+//             .then((rows) => {
+//               resolve(rows);
+//               conn.end(); // (필수) connection 종료
+//             })
+//             .catch((err) => {
+//               console.log(err);
+//               conn.end(); // (필수) connection 종료
+//               reject(err);
+//             });
+//         })
+//         .catch((err) => {
+//           //not connected
+//           console.log(err);
+//           reject(err);
+//         });
+//     });
+//   },
+// };
 
 async function signupUser(userData) {
   const query = `

@@ -1,8 +1,7 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const app = express();
 const port = 3000;
-
+const bodyParser = require("body-parser");
 const db = require("./database");
 
 app.use(bodyParser.json());
@@ -81,6 +80,24 @@ app.post("/api/reviewupload", async (req, res) => {
   const content = req.body.content;
   res.send({ title, content });
 });
+
+//게시물 읽기
+app.get("/api/reviewread", async (req, res) => {
+  try {
+    const query = "SELECT * FROM review_info WHERE pageNumber = ?";
+    const pageNumber = req.query.pageNumber; // Assuming you'll pass pageNumber as a query parameter
+    const results = await database.runQuery(query, [pageNumber]);
+    if (results.length === 0) {
+      res.status(404).send({ error: "Review not found" });
+    } else {
+      res.send(results[0]); // Assuming you want to send a single review
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
 //
 //
 // 서버
