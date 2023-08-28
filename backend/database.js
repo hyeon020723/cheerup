@@ -31,42 +31,63 @@ const router = express.Router();
 
 // connection.end();
 
-// // const mariadb = require("mariadb");
-// // const pool = mariadb.createPool({
-// //   host: "host",
-// //   user: "Jeong",
-// //   password: "20000529",
-// //   connectionLimit: 5,
-// //   database: "db",
-// // });
+const mariadb = require("mariadb");
+const vals = require("./consts.js");
+/*const { resolve } = require("core-js/fn/promise");*/
 
-// module.exports = {
-//   async run(query, params) {
-//     return new Promise((resolve, reject) => {
-//       pool
-//         .getConnection()
-//         .then((conn) => {
-//           conn
-//             .query(query, params)
-//             .then((rows) => {
-//               resolve(rows);
-//               conn.end(); // (필수) connection 종료
-//             })
-//             .catch((err) => {
-//               console.log(err);
-//               conn.end(); // (필수) connection 종료
-//               reject(err);
-//             });
-//         })
-//         .catch((err) => {
-//           //not connected
-//           console.log(err);
-//           reject(err);
-//         });
-//     });
-//   },
-// };
+const pool = mariadb.createPool({
+  host: vals.DBHost,
+  port: vals.DBPort,
+  user: vals.DBUser,
+  password: vals.DBPass,
+  database: "cheerup",
+  connectionLimit: 5,
+});
 
+async function GetUserList() {
+  let conn, rows;
+  try {
+    conn = await pool.getConnection();
+    conn.query("USE cheerup");
+    rows = await conn.query("SELECT * FROM member");
+  } catch (err) {
+    throw err;
+  } finally {
+    if (conn) conn.end();
+    return rows[0];
+  }
+}
+
+//----------------------------------------------------------//
+
+/*
+module.exports = {
+  async run(query, params) {
+    return new Promise((resolve, reject) => {
+      pool
+        .getConnection()
+        .then((conn) => {
+          conn
+            .query(query, params)
+            .then((rows) => {
+              resolve(rows);
+              conn.end(); // (필수) connection 종료
+            })
+            .catch((err) => {
+              console.log(err);
+              conn.end(); // (필수) connection 종료
+              reject(err);
+            });
+        })
+        .catch((err) => {
+          //not connected
+          console.log(err);
+          reject(err);
+        });
+    });
+  },
+};
+*/
 async function signupUser(userData) {
   const query = `
     INSERT INTO members (studentID, id, nickname, password)
@@ -133,3 +154,46 @@ router.post("/login", function (req, res) {
     }
   );
 });
+module.exports = {
+  getUserList: GetUserList,
+  async run(query) {
+    return new Promise((resolve) => {
+      pool
+        .getConnection()
+        .then((conn) => {
+          conn
+            .query(query)
+            .then((rows) => {
+              resolve(rows);
+            })
+            .catch((err) => {
+              console.log(err);
+              conn.end();
+            });
+        })
+        .catch((err) => {});
+    });
+  },
+};
+/*
+module.exports = {
+  async run(query){
+    return new Promise((resolve)=>{
+      pool.getConnection()
+      .then(conn => {
+        conn.query(query)
+          .then((rows) => {
+            resolve(rows);
+          })
+          .catch(err => {
+            console.log(err); 
+            conn.end();
+          })
+          
+      }).catch(err => {
+      });
+    })
+
+  }
+}
+*/

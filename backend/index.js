@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
 const db = require("./database");
+const database = require("./database");
 
 app.use(bodyParser.json());
 
@@ -59,20 +60,23 @@ app.post("/api/login", async (req, res) => {
 
 //
 //
+
 //
-// 게시물
-
+// 게시물 목록
 app.get("/api/reviewlist", async (req, res) => {
-  const query = "SELECT * FROM review_info";
-
-  try {
-    const results = await database.runQuery(query);
-    res.send(results);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send({ error: "Internal server error" });
-  }
+  const results = await database.run("SELECT * FROM review_info");
+  res.send(results);
 });
+
+// ?
+
+db.getUserList()
+  .then((rows) => {
+    console.log(rows);
+  })
+  .catch((errMsg) => {
+    console.log(errMsg);
+  });
 
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
@@ -83,15 +87,16 @@ app.post("/api/reviewupload", async (req, res) => {
 
 //게시물 읽기
 app.get("/api/reviewread", async (req, res) => {
+  const pageNumber = req.query.pageNumber;
+
   try {
     const query = "SELECT * FROM review_info WHERE pageNumber = ?";
-    const pageNumber = req.query.pageNumber; // Assuming you'll pass pageNumber as a query parameter
     const results = await database.runQuery(query, [pageNumber]);
+
     if (results.length === 0) {
-      res.status(404).send({ error: "Review not found" });
-    } else {
-      res.send(results[0]); // Assuming you want to send a single review
+      return res.status(404).send({ error: "Review not found" });
     }
+    return res.send(results[0]);
   } catch (error) {
     console.error(error);
     res.status(500).send({ error: "Internal server error" });
@@ -101,6 +106,8 @@ app.get("/api/reviewread", async (req, res) => {
 //
 //
 // 서버
+// 서버
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

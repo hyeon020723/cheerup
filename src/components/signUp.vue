@@ -116,6 +116,7 @@ export default {
         inputCPW: "",
         selectEmployment: "",
         selectCategory: "",
+        isIDValid: false,
       },
     };
   },
@@ -140,10 +141,12 @@ export default {
         alert("학번을 입력하세요.");
         return false;
       }
+
       if (this.user.inputId === "") {
         alert("아이디를 입력하세요.");
         return false;
       }
+
       if (this.user.inputNickName === "") {
         alert("닉네임을 입력하세요.");
         return false;
@@ -182,18 +185,14 @@ export default {
       ) {
         axios
           .post("/api/signup", { user: userData })
-
           .then((res) => {
             console.log(res.data);
             this.$router.push("/login");
             alert("환영합니다.");
           })
-
-          // 에러 시
           .catch((error) => {
             alert("회원가입을 다시 진행해주세요.");
             console.error(error);
-            // this.$router.push("/signup");
           });
 
         return {};

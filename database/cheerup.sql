@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `cheerup`.`review_info` (
   `title` VARCHAR(45) NOT NULL,
   `uploadDate` DATETIME NOT NULL,
   `nickName` VARCHAR(45) NOT NULL,
-  `file` MEDIUMBLOB NOT NULL,
+  `file` MEDIUMBLOB ,
   PRIMARY KEY (`pageNumber`),
   INDEX `fk_reviewInfo_member_idx` (`nickName` ASC) VISIBLE,
   CONSTRAINT `fk_reviewInfo_member`

@@ -5,22 +5,22 @@
     </div>
 
     <div class="reviewBox">
-      <div class="titleBox">{{ review.title }}</div>
+      <div class="titleBox">{{ post.title }}</div>
       <div class="tableBox">
         <table>
           <tr>
             <th>작성자</th>
-            <td>{{ review.nickName }}</td>
+            <td>{{ post.nickName }}</td>
           </tr>
           <tr>
             <th>게시일자</th>
-            <td>{{ review.uploadDate }}</td>
+            <td>{{ formatDate(post.uploadDate) }}</td>
           </tr>
         </table>
       </div>
       <!--tableBox div end-->
       <div class="contentBox">
-        {{ review.content }}
+        {{ post.content }}
       </div>
     </div>
     <!--reviewBox div end-->
@@ -40,15 +40,14 @@ export default {
   name: "reviewRead",
   data() {
     return {
-      review: {},
+      post: {},
     };
+  },
+  created() {
+    this.fetchReview();
   },
 
   methods: {
-    async created() {
-      await this.fetchReview();
-    },
-
     async fetchReview() {
       const pageNumber = 1; // Modify this to match the desired page number
       try {
@@ -57,7 +56,7 @@ export default {
         );
         if (response.ok) {
           const data = await response.json();
-          this.review = data;
+          this.post = data; // Change "this.review" to "this.post" to match the data variable
         } else {
           console.error("Error fetching review:", response.statusText);
         }

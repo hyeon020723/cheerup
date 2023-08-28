@@ -15,33 +15,36 @@
         <table v-if="!selectedPost" class="postTable">
           <thead>
             <tr class="postTableTitle">
+              <th>순번</th>
               <th>제목</th>
               <th>작성자</th>
               <th>작성일</th>
-              <th>조회</th>
             </tr>
             <tr>
+              <!--선-->
               <td colspan="4">
                 <hr class="postHr" />
               </td>
             </tr>
           </thead>
           <tbody>
-            <!-- <tr v-for="(post, index) in paginatedPosts" :key="index" class="post">
-        <td>{{ post.title }}</td>
-        <td>{{ post.nickName }}</td>
-        <td class="centered">{{ formatDate(post.uploadDate) }}</td>
-        <td class="centered">{{ post.views }}</td>
-      </tr> -->
             <tr
               v-for="(post, index) in paginatedPosts"
               :key="index"
               class="post"
             >
-              <td>{{ post.title }}</td>
+              <td class="centered">{{ post.pageNumber }}</td>
+              <td>
+                <router-link
+                  :to="'/reviewRead/' + post.pageNumber"
+                  class="review-link"
+                  >{{ post.title }}</router-link
+                >
+              </td>
               <td>{{ post.nickName }}</td>
               <td class="centered">{{ formatDate(post.uploadDate) }}</td>
-              <td class="centered">{{ post.views }}</td>
+
+              <!-- 사용자가 원하는 데이터 표시 -->
             </tr>
           </tbody>
         </table>
@@ -96,119 +99,14 @@
 <script>
 export default {
   name: "reviewPage",
+
+  mounted() {
+    this.fetchPosts();
+  },
+
   data() {
     return {
-      posts: [
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //     link: " ",
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 2",
-        //     author: "작성자2",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 2",
-        //     author: "작성자2",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 2",
-        //     author: "작성자2",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 2",
-        //     author: "작성자2",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 2",
-        //     author: "작성자2",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물",
-        //     author: "이의찬",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물",
-        //     author: "김시은",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자1",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물",
-        //     author: "정수환",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물 1",
-        //     author: "작성자2",
-        //     date: "2023-07-30",
-        //     views: 0,
-        //   },
-        //   {
-        //     title: "취업 후기 게시물",
-        //     author: "임가현",
-        //     date: "2023-07-31",
-        //     views: 0,
-        //   },
-      ],
+      posts: [],
       currentPage: 1,
       postsPerPage: 15,
     };
@@ -218,7 +116,7 @@ export default {
     // 페이지 관리
     sortedPosts() {
       return this.posts.slice().sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+        return new Date(b.uploadDate) - new Date(a.uploadDate);
       });
     },
     totalPages() {
@@ -229,27 +127,31 @@ export default {
       const endIndex = startIndex + this.postsPerPage;
       return this.sortedPosts.slice(startIndex, endIndex);
     },
-    // mounted() {
-    //   this.fetchPosts();
-    // },
   },
 
   methods: {
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString();
+    },
+
     async fetchPosts() {
       try {
         const response = await fetch("/api/reviewlist");
         const data = await response.json();
-        console.log(data);
-        this.posts = data;
+        this.posts = data.map((item) => {
+          return {
+            title: item.title,
+            nickName: item.nickName,
+            uploadDate: item.uploadDate,
+            pageNumber: item.pageNumber,
+            views: item.views, // 원하는 데이터가 없어서 추가하지 않음
+          };
+        });
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     },
-
-    // formatDate(dateString) {
-    //   const date = new Date(dateString);
-    //   return date.toLocaleDateString();
-    // },
 
     //page
     changePage(page) {
@@ -266,6 +168,10 @@ export default {
 </script>
 
 <style>
+tbody > tr > td > a {
+  text-decoration: none;
+  color: black;
+}
 .reviewUnder {
   display: flex;
   justify-content: center;
@@ -298,6 +204,7 @@ export default {
   width: 100%;
   margin: 1.3%;
   overflow: hidden;
+  text-align: center;
 }
 
 .reviewUploadButton {
@@ -323,10 +230,6 @@ export default {
   text-align: center;
   font-size: medium;
   color: gray;
-}
-
-.centered {
-  text-align: center;
 }
 
 .post {
