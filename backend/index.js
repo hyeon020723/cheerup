@@ -19,22 +19,17 @@ app.get("/", (req, res) => {
 //
 //
 // 회원가입
-
 app.post("/api/signup", async (req, res) => {
   const user = req.body.user;
 
-  // DB에 추가 해야돼 !!!!!!!
-  // try {
-  //   await signupUser(user);
-  //   res.status(201).json({ message: "회원가입이 완료되었습니다." });
-  // } catch (error) {
-  //   console.error("회원가입 에러:", error);
-  //   res.status(500).json({ message: "회원가입을 다시 진행해주세요." });
-  // }
-
+  await database.run(
+    `INSERT INTO member (studentID, id, nickName, password) VALUES ('${req.body.user.StudentID}','${req.body.user.Id}','${req.body.user.nickName}','${req.body.user.Pw}')`
+  );
+  res.status(201).send({ message });
   res.send(user);
 });
 
+//아이디 중복확인
 //
 //
 //
@@ -42,12 +37,6 @@ app.post("/api/signup", async (req, res) => {
 app.post("/api/login", async (req, res) => {
   const userId = req.body.userId;
   const userPw = req.body.userPw;
-
-  // try {
-  //   const result = await database.runQuery(
-  //     "SELECT * FROM members WHERE id = ?",
-  //     [user.userId]
-  //   );
 
   if (userId === "user" && userPw === "0000") {
     res.status(200).send({ message: "로그인이 완료되었습니다." });
@@ -68,16 +57,7 @@ app.get("/api/reviewlist", async (req, res) => {
   res.send(results);
 });
 
-// ?
-
-db.getUserList()
-  .then((rows) => {
-    console.log(rows);
-  })
-  .catch((errMsg) => {
-    console.log(errMsg);
-  });
-
+//
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
   const title = req.body.title;

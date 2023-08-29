@@ -11,15 +11,11 @@
         <table class="myPageTable">
           <tr>
             <th>닉네임</th>
-            <td>홍길동</td>
+            <td>임시유저</td>
           </tr>
           <tr>
             <th>아이디</th>
             <td>user</td>
-          </tr>
-          <tr>
-            <th>취업상태</th>
-            <td>취업 - 개발</td>
           </tr>
         </table>
       </div>
@@ -27,12 +23,12 @@
       <h3>내가 쓴 글</h3>
       <table class="myPageMyReivewTable">
         <tr>
-          <th>취업 후기 게시물 1</th>
-          <td>2023-07-30</td>
+          <th>첫 번째 게시물 제목</th>
+          <td>2023. 8. 17.</td>
         </tr>
         <tr>
-          <th>취업 후기 게시물 2</th>
-          <td>2023-07-30</td>
+          <th>두 번째 게시물 제목</th>
+          <td>2023. 8. 18.</td>
         </tr>
       </table>
     </div>
