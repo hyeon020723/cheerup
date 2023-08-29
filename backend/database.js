@@ -2,38 +2,8 @@ const database = require("./database");
 const express = require("express");
 const router = express.Router();
 
-//
-// const mysql = require("mysql");
-
-// const connection = mysql.createConnection({
-//   host: "hostname",
-//   user: "user",
-//   password: "password",
-//   database: "database_name",
-// });
-
-// connection.connect((error) => {
-//   if (error) {
-//     console.error("Error connecting to MySQL:", error);
-//     // Handle the error appropriately
-//   } else {
-//     console.log("Connected to MySQL successfully");
-//     // Continue with your application logic
-//   }
-// });
-
-// connection.connect();
-
-// connection.query("SELECT * from member", function (error, results, fields) {
-//   if (error) throw error;
-//   console.log("member:", results);
-// });
-
-// connection.end();
-
 const mariadb = require("mariadb");
 const vals = require("./consts.js");
-/*const { resolve } = require("core-js/fn/promise");*/
 
 const pool = mariadb.createPool({
   host: vals.DBHost,
@@ -58,65 +28,37 @@ async function GetUserList() {
   }
 }
 
-//----------------------------------------------------------//
+// //----------------------------------------------------------//
 
-/*
-module.exports = {
-  async run(query, params) {
-    return new Promise((resolve, reject) => {
-      pool
-        .getConnection()
-        .then((conn) => {
-          conn
-            .query(query, params)
-            .then((rows) => {
-              resolve(rows);
-              conn.end(); // (필수) connection 종료
-            })
-            .catch((err) => {
-              console.log(err);
-              conn.end(); // (필수) connection 종료
-              reject(err);
-            });
-        })
-        .catch((err) => {
-          //not connected
-          console.log(err);
-          reject(err);
-        });
-    });
-  },
-};
-*/
-async function signupUser(userData) {
-  const query = `
-    INSERT INTO members (studentID, id, nickname, password)
-    VALUES ('${req.body.content.studentID}','${req.body.content.id}','${req.body.content.nickname}','${req.body.content.password}')
-  `;
-  const user = [
-    userData.studentID,
-    userData.id,
-    userData.nickname,
-    userData.password,
-  ];
+// async function signupUser(userData) {
+//   const query = `
+//     INSERT INTO members (studentID, id, nickname, password)
+//     VALUES ('${req.body.content.studentID}','${req.body.content.id}','${req.body.content.nickname}','${req.body.content.password}')
+//   `;
+//   const user = [
+//     userData.studentID,
+//     userData.id,
+//     userData.nickname,
+//     userData.password,
+//   ];
 
-  try {
-    await database.runQuery(query, user);
-  } catch (error) {
-    console.error("Error signing up:", error);
-  }
-}
+//   try {
+//     await database.runQuery(query, user);
+//   } catch (error) {
+//     console.error("Error signing up:", error);
+//   }
+// }
 
-//회원가입
-router.post("/signup", function (req, res) {
-  const user = {
-    studentID: req.body.user.inputStudentID,
-    id: req.body.user.inputId,
-    nickname: req.body.user.inputNickName,
-    password: req.body.user.inputPW,
-  };
-  connection.query('SELECT id FROM members WHERE id = "' + user.id + '"');
-});
+// //회원가입
+// router.post("/signup", function (req, res) {
+//   const user = {
+//     studentID: req.body.user.inputStudentID,
+//     id: req.body.user.inputId,
+//     nickname: req.body.user.inputNickName,
+//     password: req.body.user.inputPW,
+//   };
+//   connection.query('SELECT id FROM members WHERE id = "' + user.id + '"');
+// });
 
 //로그인
 router.post("/login", function (req, res) {
