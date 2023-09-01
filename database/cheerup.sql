@@ -14,13 +14,14 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema cheerup
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cheerup` DEFAULT CHARACTER SET utf8 ;
-USE `cheerup` ;
+CREATE SCHEMA IF NOT EXISTS `cheerup` DEFAULT CHARACTER SET utf8 ; 
+USE `cheerup`;
 
 -- -----------------------------------------------------
 -- Table `cheerup`.`member`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cheerup`.`member` (
+CREATE TABLE IF NOT EXISTS `cheerup`.`member`
+(
   `studentID` VARCHAR(45) NOT NULL,
   `id` VARCHAR(45) NOT NULL,
   `nickName` VARCHAR(45) NOT NULL,
@@ -30,17 +31,18 @@ CREATE TABLE IF NOT EXISTS `cheerup`.`member` (
   UNIQUE INDEX `studentID_UNIQUE` (`studentID` ASC) VISIBLE)
 ENGINE = InnoDB;
 
-
+INSERT INTO member VALUES ('202112345', 'user', '임시유저', '0000');
 -- -----------------------------------------------------
 -- Table `cheerup`.`review_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cheerup`.`review_info` (
+CREATE TABLE
+IF NOT EXISTS `cheerup`.`review_info`
+(
   `pageNumber` INT NOT NULL,
   `content` LONGTEXT NOT NULL,
   `title` VARCHAR(45) NOT NULL,
   `uploadDate` DATETIME NOT NULL,
   `nickName` VARCHAR(45) NOT NULL,
-  `file` MEDIUMBLOB NOT NULL,
   PRIMARY KEY (`pageNumber`),
   INDEX `fk_reviewInfo_member_idx` (`nickName` ASC) VISIBLE,
   CONSTRAINT `fk_reviewInfo_member`
@@ -50,25 +52,14 @@ CREATE TABLE IF NOT EXISTS `cheerup`.`review_info` (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
+-- 임시 게시물
+INSERT INTO review_info (pageNumber, content, title, uploadDate, nickName)
+VALUES
+    (1, '첫 번째 게시물 내용', '첫 번째 게시물 제목', '2023-08-17 10:00:00', '임시유저'),
+    (2, '두 번째 게시물 내용', '두 번째 게시물 제목', '2023-08-18 14:30:00', '임시유저'),
+    (3, '세 번째 게시물 내용', '세 번째 게시물 제목', '2023-08-19 16:45:00', '임시유저');
 
--- -----------------------------------------------------
--- Table `cheerup`.`member_widthdraw`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cheerup`.`member_widthdraw` (
-  `studentID` VARCHAR(45) NOT NULL,
-  `widhdrawDate` VARCHAR(45) NULL,
-  `withdrawReason` VARCHAR(45) NULL,
-  `member_studentID` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`studentID`, `member_studentID`),
-  INDEX `fk_member_widthdraw_member1_idx` (`member_studentID` ASC) VISIBLE,
-  CONSTRAINT `fk_member_widthdraw_member1`
-    FOREIGN KEY (`member_studentID`)
-    REFERENCES `cheerup`.`member` (`studentID`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
+----------------------------
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
