@@ -28,37 +28,7 @@ async function GetUserList() {
   }
 }
 
-// //----------------------------------------------------------//
-
-// async function signupUser(userData) {
-//   const query = `
-//     INSERT INTO members (studentID, id, nickname, password)
-//     VALUES ('${req.body.content.studentID}','${req.body.content.id}','${req.body.content.nickname}','${req.body.content.password}')
-//   `;
-//   const user = [
-//     userData.studentID,
-//     userData.id,
-//     userData.nickname,
-//     userData.password,
-//   ];
-
-//   try {
-//     await database.runQuery(query, user);
-//   } catch (error) {
-//     console.error("Error signing up:", error);
-//   }
-// }
-
-// //회원가입
-// router.post("/signup", function (req, res) {
-//   const user = {
-//     studentID: req.body.user.inputStudentID,
-//     id: req.body.user.inputId,
-//     nickname: req.body.user.inputNickName,
-//     password: req.body.user.inputPW,
-//   };
-//   connection.query('SELECT id FROM members WHERE id = "' + user.id + '"');
-// });
+// ----------------------------------------------------------//
 
 //로그인
 router.post("/login", function (req, res) {

@@ -23,15 +23,12 @@ app.post("/api/signup", async (req, res) => {
   const user = req.body.user;
 
   await database.run(
-    `INSERT INTO member (studentID, id, nickName, password) VALUES ('${req.body.user.StudentID}','${req.body.user.Id}','${req.body.user.nickName}','${req.body.user.Pw}')`
+    `INSERT INTO member (studentID, id, nickName, password) VALUES ('${req.body.user.StudentID}','${req.body.user.Id}','${req.body.user.NickName}','${req.body.user.Pw}')`
   );
-  res.status(201).send({ message });
+  // res.status(201).send({ message }); ->> error
   res.send(user);
 });
 
-//아이디 중복확인
-//
-//
 //
 // 로그인
 app.post("/api/login", async (req, res) => {
@@ -47,10 +44,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-//
-//
-
-//
 // 게시물 목록
 app.get("/api/reviewlist", async (req, res) => {
   const results = await database.run("SELECT * FROM review_info");
@@ -60,9 +53,13 @@ app.get("/api/reviewlist", async (req, res) => {
 //
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  res.send({ title, content });
+  const review = req.body.review;
+  // const currentDate = new Date().toISOString().;
+
+  // await database.run(
+  //   `INSERT INTO review_info (pageNumber, title, content, uploadDate, nickName) VALUES ('4','${req.body.review.title}','${req.body.review.content}','${currentDate}','임시유저')`
+  // );
+  res.send(review);
 });
 
 //게시물 읽기
