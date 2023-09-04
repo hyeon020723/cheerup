@@ -8,7 +8,8 @@ const database = require("./database");
 app.use(bodyParser.json());
 
 //
-//
+// 변경사항 확인
+
 //
 // root
 app.get("/", (req, res) => {
