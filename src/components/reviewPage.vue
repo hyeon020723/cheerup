@@ -6,10 +6,14 @@
         <span class="countValue">{{ posts.length }}개의 글</span>
       </div>
       <div class="reviewUploadButton">
+        <router-link to="/reviewUpload" class="reviewUpload">
+          <button>작성하기</button>
+        </router-link>
       </div>
       <!-- 게시물 테이블 -->
       <div class="reviewList">
         <table v-if="!selectedPost" class="postTable">
+          <thead>
             <tr class="postTableTitle">
               <th>순번</th>
               <th>제목</th>

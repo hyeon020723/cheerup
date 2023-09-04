@@ -2,8 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
+
 const database = require("./database");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 app.use(bodyParser.json());
 
@@ -25,12 +26,10 @@ app.post("/api/signup", async (req, res) => {
   await database.run(
     `INSERT INTO member (studentID, id, nickName, password) VALUES ('${req.body.user.StudentID}','${req.body.user.Id}','${req.body.user.NickName}','${req.body.user.Pw}')`
   );
-  res.status(201).send({ message: "회원가입이 완료되었습니다." });
+  // res.status(201).send({ message }); ->> error
+  res.send(user);
 });
 
-//아이디 중복확인
-//
-//
 //
 // 로그인
 app.post("/api/login", async (req, res) => {
@@ -38,54 +37,41 @@ app.post("/api/login", async (req, res) => {
   const userPw = req.body.userPw;
 
   const userRow = await database.run(
-    `SELECT id, password FROM member WHERE id = '${userId}';`,
+    `SELECT id, password FROM member WHERE id = '${userId}';`
   );
-  
-  console.log(userId);
-  console.log(userPw);
-  console.log(userRow);
 
   const checkId = userRow[0].id;
   const checkPw = userRow[0].password;
 
-  console.log(checkId);
-  console.log(checkPw);
-  
   if (userId === checkId) {
     if (userPw === checkPw) {
-      const token = jwt.sign({ userId }, 'cheerup', { expiresIn: '5m'});
+      const token = jwt.sign({ userId }, "cheerup", { expiresIn: "5m" });
       console.log(token);
-      return res.status(200).send({ message:'Success', token});
-      
+      return res.status(200).send({ message: "Success", token });
     } else {
-        return res.status(401).send({ message:"비밀번호를 다시 입력하세요"});
-        }
+      return res.status(401).send({ message: "비밀번호를 다시 입력하세요" });
+    }
   } else {
-    return res.status(401).send({ message:'아이디를 다시 입력하세요.'});
+    return res.status(401).send({ message: "아이디를 다시 입력하세요." });
   }
-  // if (userId === "user" && userPw === "0000") {
-  //   return res.status(200).send({ message: "로그인이 완료되었습니다." });
-  // } else {
-  //   return res.status(401).send({ message: "아이디 또는 비밀번호가 일치하지 않습니다." });
-  // }
 });
 
-//
-//
-
-//
 // 게시물 목록
 app.get("/api/reviewlist", async (req, res) => {
-  const results = await database.run("SELECT * FROM member");
+  const results = await database.run("SELECT * FROM review_info");
   res.send(results);
 });
 
 //
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
-  const title = req.body.title;
-  const content = req.body.content;
-  res.send({ title, content });
+  const review = req.body.review;
+  // const currentDate = new Date().toISOString().;
+
+  // await database.run(
+  //   `INSERT INTO review_info (pageNumber, title, content, uploadDate, nickName) VALUES ('4','${req.body.review.title}','${req.body.review.content}','${currentDate}','임시유저')`
+  // );
+  res.send(review);
 });
 
 //게시물 읽기

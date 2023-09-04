@@ -5,19 +5,61 @@
         <img src="../assets/logo.png" />
         <h2 style="color: #000080">취</h2>
         <h2 style="color: #ffd700">얼업</h2>
-      </div></router-link
-    >
-    <div>
-      <router-link to="/info" class="menu">채용 정보</router-link> |
-      <router-link to="/review" class="menu">취업 후기</router-link>
+      </div>
+    </router-link>
+
+    <div class="mainMenuBox">
+      <router-link to="/info" class="mainMenu">채용 정보</router-link> |
+      <router-link to="/reviewlist" class="mainMenu">취업 후기</router-link>
     </div>
-    <div class="loginWithSignup">
-      <router-link to="/login" class="menuLogin">로그인</router-link> |
-      <router-link to="/signup" class="menuSignup">회원가입</router-link>
+
+    <div class="loginWithSignupBox">
+      <span v-if="loginSuccess">
+        <!--로그인 시-->
+        <a @click="logout" class="loginWithSignupMenu">로그아웃</a> |
+        <router-link to="/myPage" class="loginWithSignupMenu"
+          >마이페이지</router-link
+        >
+      </span>
+
+      <span v-else>
+        <router-link to="/login" class="loginWithSignupMenu"
+          >로그인</router-link
+        >
+        |
+        <router-link to="/signup" class="loginWithSignupMenu"
+          >회원가입</router-link
+        >
+      </span>
     </div>
+    <!--loginWithSignup end-->
   </div>
 </template>
-<script></script>
+
+<script>
+export default {
+  data() {
+    return {
+      loginSuccess: false,
+    };
+  },
+  created() {
+    const token = localStorage.getItem("cheerup");
+    if (token) {
+      this.loginSuccess = true;
+    }
+  },
+  methods: {
+    logout() {
+      localStorage.removeItem("cheerup");
+      this.$store.commit("logout");
+      this.$router.push("/");
+      this.loginSuccess = false;
+    },
+  },
+};
+</script>
+
 <style scoped>
 @font-face {
   font-family: "GmarketSansMedium";
