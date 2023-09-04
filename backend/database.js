@@ -87,25 +87,3 @@ module.exports = {
     });
   },
 };
-/*
-module.exports = {
-  async run(query){
-    return new Promise((resolve)=>{
-      pool.getConnection()
-      .then(conn => {
-        conn.query(query)
-          .then((rows) => {
-            resolve(rows);
-          })
-          .catch(err => {
-            console.log(err); 
-            conn.end();
-          })
-          
-      }).catch(err => {
-      });
-    })
-
-  }
-}
-*/
