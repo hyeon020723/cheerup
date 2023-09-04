@@ -1,21 +1,39 @@
 <template>
-  <cheerupHeader></cheerupHeader>
-  <router-view></router-view>
-  <cheerupFooter></cheerupFooter>
+  <div>
+    <cheerupHeader />
+    <router-view />
+    <cheerupFooter />
+  </div>
 </template>
 
 <script>
-import cheerupHeader from "./layout/cheerupHeader.vue";
-import cheerupFooter from "./layout/cheerupFooter.vue";
+import cheerupHeader from "./components/cheerupHeader.vue";
+import cheerupFooter from "./components/cheerupFooter.vue";
 
 export default {
-  // eslint-disable-next-line
   name: "App",
   components: {
     cheerupHeader,
     cheerupFooter,
   },
+  data() {
+    return {
+      isHeaderFixed: false, //헤더 저장 여부 변수
+    };
+  },
 };
 </script>
 
-<style></style>
+<style scoped>
+.cheerupHeader {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+</style>

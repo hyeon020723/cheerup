@@ -32,7 +32,7 @@ export default {
     startSlideshow() {
       setInterval(() => {
         this.nextSlide();
-      }, 3000); // Change image every 3 seconds
+      }, 3000);
     },
     nextSlide() {
       this.currentImgIndex = (this.currentImgIndex + 1) % this.imageUrls.length;
@@ -52,15 +52,15 @@ export default {
   margin: 0;
   font-family: "GmarketSansMedium";
 }
+button {
+  cursor: pointer;
+}
 h3 {
   font-size: 18px;
 }
-button:hover {
-  cursor: pointer;
-}
 
 .main {
-  height: 400px;
+  height: 73vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -75,6 +75,10 @@ button:hover {
   text-align: left;
   font-size: 1.2em;
   transform: translate(0, -50%);
+<<<<<<< HEAD
+=======
+  z-index: 1; /* 메인 텍스트가 이미지 위에 표시되도록 z-index 조정 */
+>>>>>>> upstream/main
 }
 
 .mainImgSlide {

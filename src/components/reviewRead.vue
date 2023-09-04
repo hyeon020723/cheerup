@@ -1,33 +1,32 @@
 <template>
   <div class="wholeBox">
     <div class="postTitle">
-      <h3 class="reviewTitle">취업 후기</h3>
+      <h3>취업 후기</h3>
     </div>
 
     <div class="reviewBox">
-      <div class="titleBox">제목이 입력될 부분입니다</div>
+      <div class="titleBox">{{ post.title }}</div>
       <div class="tableBox">
         <table>
           <tr>
             <th>작성자</th>
-            <td>닉네임</td>
+            <td>{{ post.nickName }}</td>
           </tr>
           <tr>
             <th>게시일자</th>
-            <td>2222년2월22일22시22분</td>
+            <td>{{ formatDate(post.uploadDate) }}</td>
           </tr>
         </table>
       </div>
       <!--tableBox div end-->
       <div class="contentBox">
-        내용이 들어갈 부분입니다 <Br /> 내용이 들어갈 부분입니다 <Br />
-        내용이 들어갈 부분입니다
+        {{ post.content }}
       </div>
     </div>
     <!--reviewBox div end-->
 
     <div class="listButtonBox">
-      <router-link to="/review" class="menu">
+      <router-link to="/reviewlist" class="menu">
         <button>목록</button></router-link
       >
     </div>
@@ -40,13 +39,46 @@
 export default {
   name: "reviewRead",
   data() {
-    return {};
+    return {
+      post: {},
+    };
   },
-  methods: {},
+  created() {
+    this.fetchReview();
+  },
+
+  methods: {
+    async fetchReview() {
+      const pageNumber = 1; // Modify this to match the desired page number
+      try {
+        const response = await fetch(
+          `/api/reviewread?pageNumber=${pageNumber}`
+        );
+        if (response.ok) {
+          const data = await response.json();
+          this.post = data; // Change "this.review" to "this.post" to match the data variable
+        } else {
+          console.error("Error fetching review:", response.statusText);
+        }
+      } catch (error) {
+        console.error("Error fetching review:", error);
+      }
+    },
+
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleString();
+    },
+  },
 };
 </script>
 
 <style>
+.postTitle > h3 {
+  padding: 30px;
+  padding-bottom: 0px;
+}
+
 .wholeBox {
   display: flex;
   flex-direction: column; /* reviewBox를 가운데 정렬 */
@@ -89,8 +121,16 @@ export default {
   justify-content: flex-end; /* 내용을 왼쪽으로 정렬 */
 }
 
-th,
-td {
+.tableBox > th,
+.tableBox > td {
   padding-right: 5px;
+}
+.listButtonBox > .menu > button {
+  border: 0;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
 }
 </style>
