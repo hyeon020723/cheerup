@@ -57,7 +57,6 @@ export default {
     return {
       userId: "",
       userPw: "",
-      loginSuccess: false,
     };
   },
 
@@ -68,7 +67,7 @@ export default {
 
   methods: {
     login() {
-      const saveData = { userId: this.userId, userPw: this.userPw};
+      const saveData = { userId: this.userId, userPw: this.userPw };
 
       if (saveData.userId === "") {
         alert("아이디를 입력해주세요");
@@ -88,8 +87,7 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             alert("로그인이 완료되었습니다.");
-            localStorage.setItem("cheerup", res.data.token);
-            this.loginSuccess = true;
+
             //store로 로그인 상태 ==> 문제발생
             // this.$store.commit("login", res.data);
 

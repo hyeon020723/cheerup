@@ -38,24 +38,10 @@
 
 <script>
 export default {
-  data() {
-    return {
-      loginSuccess: false,
-    };
-  },
-  created() {
-    const token = localStorage.getItem('cheerup');
-    if (token) {
-      this.loginSuccess = true;
-    }
-  },
   methods: {
     logout() {
-      localStorage.removeItem('cheerup');
       this.$store.commit("logout");
       this.$router.push("/");
-      
-      this.loginSuccess = false;
     },
   },
 };
