@@ -76,7 +76,7 @@ app.post("/api/login", async (req, res) => {
 //
 // 게시물 목록
 app.get("/api/reviewlist", async (req, res) => {
-  const results = await database.run("SELECT * FROM member");
+  const results = await database.run("SELECT * FROM review_info");
   res.send(results);
 });
 

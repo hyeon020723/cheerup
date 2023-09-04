@@ -22,7 +22,7 @@
                 <hr class="postHr" />
               </td>
             </tr>
-          </thead>
+          
           <tbody>
             <tr
               v-for="(post, index) in paginatedPosts"

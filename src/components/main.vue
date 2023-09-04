@@ -75,10 +75,7 @@ h3 {
   text-align: left;
   font-size: 1.2em;
   transform: translate(0, -50%);
-<<<<<<< HEAD
-=======
   z-index: 1; /* 메인 텍스트가 이미지 위에 표시되도록 z-index 조정 */
->>>>>>> upstream/main
 }
 
 .mainImgSlide {
