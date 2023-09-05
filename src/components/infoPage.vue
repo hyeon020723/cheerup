@@ -13,11 +13,11 @@
           <img class="cardImg" :src="job.imageURL" alt="기업 로고" />
           <div class="cardBody">
             <!-- 기업 이름 -->
-            <h5>{{ job.companyName }}</h5>
+            <h5 class="card-title">{{ job.companyName }}</h5>
             <!-- 상세 정보 -->
-            <p>{{ job.details }}</p>
+            <p class="card-text">{{ job.details }}</p>
             <!-- 모집 날짜 -->
-            <p class="cardDate">{{ job.recruitmentDate }}</p>
+            <p class="card-text">{{ job.recruitmentDate }}</p>
           </div>
         </div>
       </div>
@@ -33,60 +33,60 @@ export default {
       jobList: [
         // 채용정보 데이터
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/ASPROVA.png"),
+          companyName: "아스프로바㈜",
+          details: "산업공학 컨설턴트 모집",
+          recruitmentDate: "~ 23.10.23. (월)",
+          websiteURL: "https://www.jobkorea.co.kr/Recruit/GI_Read/42703915?Oem_Code=C1&logpath=1&stext=%EC%82%B0%EC%97%85%EA%B3%B5%ED%95%99&listno=1",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/G2G.jpg"),
+          companyName: "G2G 파트너스",
+          details: "통계적 공정관리 산공 전공자 모집",
+          recruitmentDate: "~ 23.10.04. (수)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46502678&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/LOWCARBON.png"),
+          companyName: "(주)로우카본",
+          details: "영업/생산/일반관리 인재 모집",
+          recruitmentDate: "~ 23.09.10. (일)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46342061&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/SARAMIN.png"),
+          companyName: "(주)사람인에이치에스",
+          details: "공정 설계 정직원 구인",
+          recruitmentDate: "~ 채용시",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46400216&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/ViOL.jpg"),
+          companyName: "(주)비올",
+          details: "각 부문 인재 채용 (생산)",
+          recruitmentDate: "~ 23.09.10. (일)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46332043&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/mPLUS.jpg"),
+          companyName: "(주)엠플러스",
+          details: "기술본부 부문별 인재 영입",
+          recruitmentDate: "~ 23.09.28. (목)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46427672&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/inPARTNERS.jpg"),
+          companyName: "인파트너스",
+          details: "품질보증(QA) 엔지니어 채용",
+          recruitmentDate: "~ 23.09.27. (수)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46435455&view_type=search",
         },
         {
-          imageURL: require("@/assets/infoImgETRI.png"),
-          companyName: "한국전자통신연구원",
-          details: "채용 상세 정보",
-          recruitmentDate: "23.06.01 - 23.08.01",
-          websiteURL: "https://www.etri.re.kr/intro.html",
+          imageURL: require("@/assets/HelloSearch.jpg"),
+          companyName: "(주)헬로서치",
+          details: "품질보증, 품질개선 및 재발 방지활동",
+          recruitmentDate: "~ 23.09.22. (금)",
+          websiteURL: "https://www.saramin.co.kr/zf_user/jobs/relay/view?rec_idx=46422893&view_type=search",
         },
       ],
     };
@@ -111,14 +111,15 @@ export default {
 
 .infoTitle {
   margin-bottom: 30px;
+  text-align: center;
 }
+
 .infoText {
   font-weight: bold;
   font-size: x-large;
 }
 
 .cardList {
-  justify-content: center;
   display: flex;
   flex-wrap: wrap;
   margin-left: 1.5%;
@@ -140,29 +141,14 @@ export default {
   background-color: white;
   border-radius: 8px;
   box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
 }
 
 .cardImg {
-  height: 60px;
-  width: 100%;
-  object-fit: cover;
+  height: 40px;
+  margin: 1%;
 }
-.cardBody > h5 {
-  /*기업 정보 */
-  height: 30px;
-  line-height: 30px;
-  font-size: 15px;
-  white-space: nowrap;
-}
-.cardBody > p {
-  /*채용 상세 정보 */
-  font-size: auto;
-  white-space: nowrap;
-}
-.cardDate {
-  /*채용 날짜 */
-  white-space: nowrap;
-  font-size: small;
+
+.card-title {
+  font-size: larger;
 }
 </style>
