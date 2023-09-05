@@ -47,6 +47,7 @@ app.post("/api/login", async (req, res) => {
     if (userPw === checkPw) {
       const token = jwt.sign({ userId }, "cheerup", { expiresIn: "5m" });
       console.log(token);
+
       return res.status(200).send({ message: "Success", token });
     } else {
       return res.status(401).send({ message: "비밀번호를 다시 입력하세요" });
