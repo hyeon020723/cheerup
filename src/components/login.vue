@@ -92,7 +92,7 @@ export default {
             this.loginSuccess = true;
 
             //store로 로그인 상태 ==> 문제발생
-            this.$store.commit("login", res.data);
+            // this.$store.commit("login", res.data);
 
             //화면이동
             this.$router.push("/");
