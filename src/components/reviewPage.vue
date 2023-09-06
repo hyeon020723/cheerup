@@ -5,7 +5,7 @@
         <h3 class="reviewTitle">취업 후기</h3>
         <span class="countValue">{{ posts.length }}개의 글</span>
       </div>
-      <div class="reviewUploadButton">
+      <div class="reviewUploadButton" v-if="loginSuccess">
         <router-link to="/reviewUpload" class="reviewUpload">
           <button>작성하기</button>
         </router-link>
@@ -21,13 +21,13 @@
               <th>작성일</th>
             </tr>
             <tr>
-              <!--선-->
               <td colspan="4">
                 <hr class="postHr" />
               </td>
             </tr>
           </thead>
           <tbody>
+            <!-- 사용자가 원하는 데이터 표시 -->
             <tr
               v-for="(post, index) in paginatedPosts"
               :key="index"
@@ -43,8 +43,6 @@
               </td>
               <td>{{ post.nickName }}</td>
               <td class="centered">{{ formatDate(post.uploadDate) }}</td>
-
-              <!-- 사용자가 원하는 데이터 표시 -->
             </tr>
           </tbody>
         </table>
@@ -126,6 +124,10 @@ export default {
       const startIndex = (this.currentPage - 1) * this.postsPerPage;
       const endIndex = startIndex + this.postsPerPage;
       return this.sortedPosts.slice(startIndex, endIndex);
+    },
+    loginSuccess() {
+      const token = localStorage.getItem("cheerup");
+      return !!token;
     },
   },
 

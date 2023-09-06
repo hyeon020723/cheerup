@@ -47,12 +47,31 @@ app.post("/api/login", async (req, res) => {
     if (userPw === checkPw) {
       const token = jwt.sign({ userId }, "cheerup", { expiresIn: "5m" });
       console.log(token);
+
       return res.status(200).send({ message: "Success", token });
     } else {
       return res.status(401).send({ message: "비밀번호를 다시 입력하세요" });
     }
   } else {
     return res.status(401).send({ message: "아이디를 다시 입력하세요." });
+  }
+});
+
+//
+// 마이페이지
+app.get("/api/mypage/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const query = "SELECT * FROM member WHERE id = ?";
+    const results = await database.run(query, [userId]);
+
+    if (results.length === 0) {
+      return res.status(404).send({ error: "User not found" });
+    }
+    return res.send(results[0]);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
   }
 });
 
@@ -65,22 +84,27 @@ app.get("/api/reviewlist", async (req, res) => {
 //
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
-  const review = req.body.review;
-  // const currentDate = new Date().toISOString().;
+  const { title, content } = req.body;
+  const nickName = "임시유저";
+  const uploadDate = new Date().toISOString().slice(0, 19).replace("T", " ");
 
-  // await database.run(
-  //   `INSERT INTO review_info (pageNumber, title, content, uploadDate, nickName) VALUES ('4','${req.body.review.title}','${req.body.review.content}','${currentDate}','임시유저')`
-  // );
-  res.send(review);
+  try {
+    const query = `INSERT INTO review_info (title, content, uploadDate, nickName) VALUES (?, ?, ?, ?)`;
+    await database.run(query, [title, content, uploadDate, nickName]);
+    res.status(201).send({ message: "Review uploaded successfully" });
+  } catch (error) {
+    console.error("Error uploading review:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
 });
 
-//게시물 읽기
-app.get("/api/reviewread", async (req, res) => {
-  const pageNumber = req.query.pageNumber;
+// 게시물 읽기
+app.get("/api/reviewread/:pageNumber", async (req, res) => {
+  const pageNumber = req.params.pageNumber;
 
   try {
     const query = "SELECT * FROM review_info WHERE pageNumber = ?";
-    const results = await database.runQuery(query, [pageNumber]);
+    const results = await database.run(query, [pageNumber]);
 
     if (results.length === 0) {
       return res.status(404).send({ error: "Review not found" });

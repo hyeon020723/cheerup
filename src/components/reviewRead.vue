@@ -34,29 +34,28 @@
 
   <!--WholeBox div end-->
 </template>
-
 <script>
 export default {
-  name: "reviewRead",
+  name: "ReviewRead",
+  props: ["pageNumber"],
+
   data() {
     return {
       post: {},
     };
   },
+
   created() {
     this.fetchReview();
   },
 
   methods: {
     async fetchReview() {
-      const pageNumber = 1; // Modify this to match the desired page number
       try {
-        const response = await fetch(
-          `/api/reviewread?pageNumber=${pageNumber}`
-        );
+        const response = await fetch(`/api/reviewread/${this.pageNumber}`);
         if (response.ok) {
           const data = await response.json();
-          this.post = data; // Change "this.review" to "this.post" to match the data variable
+          this.post = data;
         } else {
           console.error("Error fetching review:", response.statusText);
         }

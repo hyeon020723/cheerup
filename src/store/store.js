@@ -27,18 +27,3 @@ export default createStore({
 
   modules: {},
 });
-
-//header로 로그인상태 보내기
-
-// axios
-//   .get("http://localhost:8080/", {
-//     headers: {
-//       Authorization: "Bearer " + store.state.token, // 수정
-//     },
-//   })
-//   .then((res) => {
-//     this.sampleData = res.data;
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });

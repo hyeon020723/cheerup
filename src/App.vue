@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      isHeaderFixed: false, //헤더 저장 여부 변수
+      isHeaderFixed: false,
     };
   },
 };

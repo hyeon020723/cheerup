@@ -23,7 +23,7 @@
       </span>
 
       <span v-else>
-        <router-link to="/login" class="loginWithSignupMenu"
+        <router-link to="/cheerupLogin" class="loginWithSignupMenu"
           >로그인</router-link
         >
         |
@@ -44,17 +44,17 @@ export default {
     };
   },
   created() {
-    const token = localStorage.getItem('cheerup');
+    const token = localStorage.getItem("cheerup");
     if (token) {
       this.loginSuccess = true;
     }
+    this.userId = localStorage.getItem("userId");
   },
   methods: {
     logout() {
-      localStorage.removeItem('cheerup');
-      this.$store.commit("logout");
+      localStorage.removeItem("cheerup");
+      // this.$store.commit("logout");
       this.$router.push("/");
-      
       this.loginSuccess = false;
     },
   },

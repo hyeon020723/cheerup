@@ -8,12 +8,6 @@
         <b><span style="color: #000080; font-size: 28px">취</span></b>
         <b><span style="color: #ffd700; font-size: 28px">얼업</span></b>
       </div>
-      <!--여기서부터 지워야하는 부분-->
-      <p>
-        <br />
-        백엔드 임시 data<br />id: "user", pw: "0000" <br />
-      </p>
-      <!--여기까지 지워야하는 부분-->
 
       <div class="loginInputCard">
         <p><b>아이디</b></p>
@@ -47,7 +41,6 @@
 </template>
 
 <script>
-import cheerupHeader from "@/components/cheerupHeader.vue";
 import axios from "axios";
 
 export default {
@@ -61,14 +54,9 @@ export default {
     };
   },
 
-  components: {
-    // eslint-disable-next-line
-    cheerupHeader,
-  },
-
   methods: {
     login() {
-      const saveData = { userId: this.userId, userPw: this.userPw};
+      const saveData = { userId: this.userId, userPw: this.userPw };
 
       if (saveData.userId === "") {
         alert("아이디를 입력해주세요");
@@ -88,13 +76,22 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             alert("로그인이 완료되었습니다.");
+
+            //로그인처리
             localStorage.setItem("cheerup", res.data.token);
+            localStorage.setItem("userId", saveData.userId);
             this.loginSuccess = true;
-            //store로 로그인 상태 ==> 문제발생
-            // this.$store.commit("login", res.data);
 
             //화면이동
             this.$router.push("/");
+
+            // 마이페이지에 Id를 전달
+            this.$router.push({
+              name: "myPage",
+              params: { userId: saveData.userId },
+            });
+
+            console.log("로그인 ID:", saveData.userId);
           }
         })
         .catch((error) => {

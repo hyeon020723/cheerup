@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import info from "@/components/infoPage.vue";
 import reviewlist from "@/components/reviewPage.vue";
-import login from "@/components/login.vue";
+import cheerupLogin from "@/components/login.vue";
 import signup from "@/components/signUp.vue";
 import myPage from "@/components/myPage.vue";
 import main from "@/components/main.vue";
@@ -26,9 +26,9 @@ const routes = [
     component: reviewlist,
   },
   {
-    path: "/login",
-    name: "login",
-    component: login,
+    path: "/cheerupLogin",
+    name: "cheerupLogin",
+    component: cheerupLogin,
   },
   {
     path: "/signup",
@@ -36,14 +36,16 @@ const routes = [
     component: signup,
   },
   {
-    path: "/myPage",
+    path: "/myPage/:userId",
     name: "myPage",
     component: myPage,
+    props: true,
   },
   {
-    path: "/reviewRead",
+    path: "/reviewRead/:pageNumber", // 동적 세그먼트 :pageNumber를 정의
     name: "reviewRead",
     component: reviewRead,
+    props: true, // props로 라우트 파라미터를 전달하도록 설정
   },
   {
     path: "/reviewUpload",
