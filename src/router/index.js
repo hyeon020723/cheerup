@@ -41,9 +41,10 @@ const routes = [
     component: myPage,
   },
   {
-    path: "/reviewRead",
+    path: "/reviewRead/:pageNumber", // 동적 세그먼트 :pageNumber를 정의
     name: "reviewRead",
     component: reviewRead,
+    props: true, // props로 라우트 파라미터를 전달하도록 설정
   },
   {
     path: "/reviewUpload",

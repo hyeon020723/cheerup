@@ -57,6 +57,32 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
+//
+// 마이페이지
+app.get("/api/mypage/:userId", async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const query = "SELECT * FROM member WHERE id = ?";
+    const results = await database.run(query, [userId]);
+
+    if (results.length === 0) {
+      return res.status(404).send({ error: "User not found" });
+    }
+
+    const user = {
+      studentID: results[0].studentID,
+      id: results[0].id,
+      nickName: results[0].nickName,
+    };
+
+    return res.send(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ error: "Internal server error" });
+  }
+});
+
 // 게시물 목록
 app.get("/api/reviewlist", async (req, res) => {
   const results = await database.run("SELECT * FROM review_info");
@@ -67,21 +93,21 @@ app.get("/api/reviewlist", async (req, res) => {
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
   const review = req.body.review;
-  // const currentDate = new Date().toISOString().;
+  const currentDate = new Date().toISOString();
 
-  // await database.run(
-  //   `INSERT INTO review_info (pageNumber, title, content, uploadDate, nickName) VALUES ('4','${req.body.review.title}','${req.body.review.content}','${currentDate}','임시유저')`
-  // );
+  await database.run(
+    `INSERT INTO review_info (pageNumber, title, content, uploadDate, nickName) VALUES ('4','${req.body.review.title}','${req.body.review.content}','${currentDate}','임시유저')`
+  );
   res.send(review);
 });
 
-//게시물 읽기
-app.get("/api/reviewread", async (req, res) => {
-  const pageNumber = req.query.pageNumber;
+// 게시물 읽기
+app.get("/api/reviewread/:pageNumber", async (req, res) => {
+  const pageNumber = req.params.pageNumber;
 
   try {
     const query = "SELECT * FROM review_info WHERE pageNumber = ?";
-    const results = await database.runQuery(query, [pageNumber]);
+    const results = await database.run(query, [pageNumber]);
 
     if (results.length === 0) {
       return res.status(404).send({ error: "Review not found" });

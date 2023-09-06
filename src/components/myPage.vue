@@ -11,33 +11,53 @@
         <table class="myPageTable">
           <tr>
             <th>닉네임</th>
-            <td>임시유저</td>
+            <td>{{ userData ? userData.nickname : "로딩 중..." }}</td>
           </tr>
           <tr>
             <th>아이디</th>
-            <td>user</td>
+            <td>{{ userData ? userData.id : "로딩 중..." }}</td>
           </tr>
         </table>
       </div>
       <hr />
       <h3>내가 쓴 글</h3>
       <table class="myPageMyReivewTable">
-        <tr>
-          <th>첫 번째 게시물 제목</th>
-          <td>2023. 8. 17.</td>
+        <tr v-for="(post, index) in userData.posts" :key="index">
+          <th>{{ post.title }}</th>
+          <td>{{ post.date }}</td>
         </tr>
-        <tr>
-          <th>두 번째 게시물 제목</th>
-          <td>2023. 8. 18.</td>
+        <tr v-if="!userData.posts || userData.posts.length === 0">
+          <td colspan="2">게시물이 없습니다.</td>
         </tr>
       </table>
     </div>
   </div>
 </template>
-
 <script>
+import axios from "axios";
+
 export default {
   name: "myPage",
+  props: ["userId"],
+
+  data() {
+    return {
+      userData: {},
+    };
+  },
+  created() {
+    this.fetchUserData(this.userId);
+  },
+  methods: {
+    async fetchUserData(userId) {
+      try {
+        const response = await axios.get(`/api/mypage/${userId}`);
+        this.userData = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
 };
 </script>
 

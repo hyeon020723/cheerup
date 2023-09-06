@@ -48,13 +48,13 @@ export default {
     if (token) {
       this.loginSuccess = true;
     }
+    this.userId = localStorage.getItem("userId");
   },
   methods: {
     logout() {
       localStorage.removeItem("cheerup");
       // this.$store.commit("logout");
       this.$router.push("/");
-
       this.loginSuccess = false;
     },
   },

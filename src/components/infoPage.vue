@@ -130,21 +130,21 @@ export default {
 .cardList {
   display: flex;
   flex-wrap: wrap;
-  margin-left: 1.5%;
   max-width: 1200px;
+  margin: 0 auto;
 }
-.cardList:hover {
-  cursor: pointer;
-}
-.col-md-3,
-.col-6 {
-  flex-basis: calc(25%);
-  margin-bottom: 2%;
+
+.col-md-3 {
+  flex-basis: calc(25% - 2%); /* 우측 여백을 제외한 25%로 설정합니다 */
+  margin: 0 1% 2% 1%;
 }
 
 .card {
   text-align: center;
-  width: 88%;
+  justify-items: center;
+  width: auto;
+  min-width: 150px;
+  height: 93%;
   padding: 5px;
   background-color: white;
   border-radius: 8px;
@@ -153,6 +153,7 @@ export default {
 
 .cardImg {
   height: 40px;
+  width: auto;
   margin: 1%;
 }
 

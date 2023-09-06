@@ -21,13 +21,13 @@
               <th>작성일</th>
             </tr>
             <tr>
-              <!--선-->
               <td colspan="4">
                 <hr class="postHr" />
               </td>
             </tr>
           </thead>
           <tbody>
+            <!-- 사용자가 원하는 데이터 표시 -->
             <tr
               v-for="(post, index) in paginatedPosts"
               :key="index"
@@ -43,8 +43,6 @@
               </td>
               <td>{{ post.nickName }}</td>
               <td class="centered">{{ formatDate(post.uploadDate) }}</td>
-
-              <!-- 사용자가 원하는 데이터 표시 -->
             </tr>
           </tbody>
         </table>
@@ -129,7 +127,7 @@ export default {
     },
     loginSuccess() {
       const token = localStorage.getItem("cheerup");
-      return !!token; // Convert token to boolean
+      return !!token;
     },
   },
 
