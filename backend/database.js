@@ -1,7 +1,6 @@
 const database = require("./database");
 const express = require("express");
 const router = express.Router();
-
 const mariadb = require("mariadb");
 const vals = require("./consts.js");
 
@@ -28,8 +27,6 @@ async function GetUserList() {
   }
 }
 
-// ----------------------------------------------------------//
-
 //로그인
 router.post("/login", function (req, res) {
   const user = {
@@ -42,7 +39,6 @@ router.post("/login", function (req, res) {
     function (err, row) {
       if (err) {
         res.json({
-          // 매칭되는 아이디 없을 경우
           success: false,
           message: "아이디나 비번확인!",
         });
@@ -51,14 +47,12 @@ router.post("/login", function (req, res) {
         bcrypt.compare(user.password, row[0].password, function (err, res2) {
           if (res2) {
             res.json({
-              // 로그인 성공
               success: true,
               message: "성공!",
             });
           } else {
             res.json({
-              // 매칭되는 아이디는 있으나, 비밀번호가 틀린 경우            success: false,
-              message: "비번틀림!",
+              message: "비밀번호가 틀립니다!",
             });
           }
         });
@@ -66,6 +60,31 @@ router.post("/login", function (req, res) {
     }
   );
 });
+
+// 마이페이지
+router.get("/mypage/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const connection = await pool.getConnection();
+
+    const sql = "SELECT * FROM member WHERE id = ?";
+    const [rows] = await connection.query(sql, [userId]);
+    connection.release();
+
+    if (rows.length === 0) {
+      res.status(404).json({ message: "사용자를 찾을 수 없습니다." });
+    } else {
+      // 사용자 정보를 응답으로 보내기
+      res.status(200).json(rows[0]);
+    }
+  } catch (error) {
+    // 오류 발생 시 500 에러 응답
+    console.error("데이터베이스 오류:", error);
+    res.status(500).json({ message: "데이터베이스 오류가 발생했습니다." });
+  }
+});
+
 module.exports = {
   getUserList: GetUserList,
   async run(query) {

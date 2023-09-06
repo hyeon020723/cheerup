@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import cheerupHeader from "@/components/cheerupHeader.vue";
 import axios from "axios";
 
 export default {
@@ -53,11 +52,6 @@ export default {
       userPw: "",
       loginSuccess: false,
     };
-  },
-
-  components: {
-    // eslint-disable-next-line
-    cheerupHeader,
   },
 
   methods: {
@@ -82,10 +76,14 @@ export default {
         .then((res) => {
           if (res.status === 200) {
             alert("로그인이 완료되었습니다.");
+
             //로그인처리
             localStorage.setItem("cheerup", res.data.token);
             localStorage.setItem("userId", saveData.userId);
             this.loginSuccess = true;
+
+            //화면이동
+            this.$router.push("/");
 
             // 마이페이지에 Id를 전달
             this.$router.push({
@@ -93,8 +91,7 @@ export default {
               params: { userId: saveData.userId },
             });
 
-            //화면이동
-            this.$router.push("/");
+            console.log("로그인 ID:", saveData.userId);
           }
         })
         .catch((error) => {

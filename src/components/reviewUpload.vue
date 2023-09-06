@@ -1,26 +1,20 @@
 <template>
   <div class="wholeBox">
     <div class="writingHeader"><h3>글쓰기</h3></div>
-    <!--writingHeader div end-->
-
     <div class="middleBox">
       <div class="writeContents">
         <input
           placeholder="제목을 입력해 주세요."
           class="textareaInput"
-          v-model="review.title"
+          v-model="title"
         />
         <textarea
           placeholder="내용을 입력해 주세요."
           class="mainContent"
-          v-model="review.content"
+          v-model="content"
         ></textarea>
       </div>
-      <!-- <div class="attachBox">
-        <input type="file" class="fileInput" />
-      </div> -->
     </div>
-    <!--middleBox div end-->
 
     <div class="tollBox">
       <button @click="uploadDecision()" class="registerToll">등록</button>
@@ -29,7 +23,6 @@
       </a>
     </div>
   </div>
-  <!--wholeBox div end-->
 </template>
 
 <script>
@@ -38,19 +31,23 @@ import axios from "axios";
 export default {
   name: "reviewUpload",
   data() {
-    return { review: { title: "", content: "" } };
+    return { title: this.title, content: this.content };
   },
 
   methods: {
     uploadDecision() {
+      if (!this.title || !this.content) {
+        alert("제목과 내용을 입력해주세요.");
+        return;
+      }
+
       if (confirm("작성한 글을 게시하시겠습니까?")) {
-        //네를 누르면 게시
         const review = {
-          title: this.review.title,
-          content: this.review.content,
+          title: this.title,
+          content: this.content,
         };
         axios
-          .post("/api/reviewupload", { review: review })
+          .post("/api/reviewupload", review)
           .then((res) => {
             console.log(res.data);
             alert("글을 게시하였습니다");
@@ -59,10 +56,8 @@ export default {
           .catch((error) => {
             console.error("Error uploading review:", error);
           });
-
-        //취소를 누르면 유지
       } else {
-        alert("취소하였습니다.");
+        // 유지
       }
     },
 
@@ -73,11 +68,8 @@ export default {
         )
       ) {
         this.$router.push("/reviewlist");
-        //
-        //
-        //
       } else {
-        // "아니오"를 눌렀을 때 유지 상태
+        // 유지 상태
       }
     },
   },

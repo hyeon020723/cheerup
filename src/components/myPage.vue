@@ -1,5 +1,4 @@
 <template>
-  <!-- myPageMain부분 코드 -->
   <div class="myPageMain">
     <div class="myPageCard">
       <div class="logo">
@@ -47,12 +46,15 @@ export default {
   },
   created() {
     this.fetchUserData(this.userId);
+    console.log("mypage:", this.userId);
   },
   methods: {
     async fetchUserData(userId) {
       try {
         const response = await axios.get(`/api/mypage/${userId}`);
         this.userData = response.data;
+
+        console.log("mypage:", this.userData);
       } catch (error) {
         console.error(error);
       }

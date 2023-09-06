@@ -23,7 +23,7 @@
       </span>
 
       <span v-else>
-        <router-link to="/login" class="loginWithSignupMenu"
+        <router-link to="/cheerupLogin" class="loginWithSignupMenu"
           >로그인</router-link
         >
         |
