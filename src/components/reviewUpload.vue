@@ -6,12 +6,12 @@
         <input
           placeholder="제목을 입력해 주세요."
           class="textareaInput"
-          v-model="title"
+          v-model="review.title"
         />
         <textarea
           placeholder="내용을 입력해 주세요."
           class="mainContent"
-          v-model="content"
+          v-model="review.content"
         ></textarea>
       </div>
     </div>
@@ -31,23 +31,28 @@ import axios from "axios";
 export default {
   name: "reviewUpload",
   data() {
-    return { title: this.title, content: this.content };
+    return {
+      review: {
+        title: "",
+        content: "",
+      },
+    };
   },
 
   methods: {
     uploadDecision() {
-      if (!this.title || !this.content) {
+      if (!this.review.title || !this.review.content) {
         alert("제목과 내용을 입력해주세요.");
         return;
       }
 
       if (confirm("작성한 글을 게시하시겠습니까?")) {
         const review = {
-          title: this.title,
-          content: this.content,
+          title: this.review.title,
+          content: this.review.content,
         };
         axios
-          .post("/api/reviewupload", review)
+          .post("/api/reviewupload", { review: review })
           .then((res) => {
             console.log(res.data);
             alert("글을 게시하였습니다");

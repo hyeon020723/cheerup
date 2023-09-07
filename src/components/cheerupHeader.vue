@@ -17,13 +17,13 @@
       <span v-if="loginSuccess">
         <!--로그인 시-->
         <a @click="logout" class="loginWithSignupMenu">로그아웃</a> |
-        <router-link to="/myPage" class="loginWithSignupMenu"
+        <router-link :to="'/mypage/' + userId" class="loginWithSignupMenu"
           >마이페이지</router-link
         >
       </span>
 
       <span v-else>
-        <router-link to="/cheerupLogin" class="loginWithSignupMenu"
+        <router-link to="/login" class="loginWithSignupMenu"
           >로그인</router-link
         >
         |
@@ -32,7 +32,6 @@
         >
       </span>
     </div>
-    <!--loginWithSignup end-->
   </div>
 </template>
 

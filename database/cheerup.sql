@@ -2,64 +2,50 @@
 -- Wed Aug 30 00:10:35 2023
 -- Model: New Model    Version: 1.0
 -- MySQL Workbench Forward Engineering
-
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 -- -----------------------------------------------------
 -- Schema cheerup
 -- -----------------------------------------------------
-
 -- -----------------------------------------------------
 -- Schema cheerup
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `cheerup` DEFAULT CHARACTER SET utf8 ; 
+CREATE SCHEMA IF NOT EXISTS `cheerup` DEFAULT CHARACTER SET utf8;
 USE `cheerup`;
-
 -- -----------------------------------------------------
 -- Table `cheerup`.`member`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cheerup`.`member`
-(
-  `studentID` VARCHAR(45) NOT NULL,
+CREATE TABLE IF NOT EXISTS `cheerup`.`member` (`studentID` VARCHAR(45) NOT NULL,
   `id` VARCHAR(45) NOT NULL,
   `nickName` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`studentID`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-  UNIQUE INDEX `studentID_UNIQUE` (`studentID` ASC) VISIBLE)
-ENGINE = InnoDB;
+  PRIMARY KEY(`studentID`),
+  UNIQUE INDEX `id_UNIQUE`(`id` ASC) VISIBLE,
+  UNIQUE INDEX `studentID_UNIQUE`(`studentID` ASC) VISIBLE);
 
 INSERT INTO member VALUES ('202112345', 'user', '임시유저', '0000');
 -- -----------------------------------------------------
 -- Table `cheerup`.`review_info`
 -- -----------------------------------------------------
-CREATE TABLE
-IF NOT EXISTS `cheerup`.`review_info`
-(
-  `pageNumber` INT NOT NULL,
-  `content` LONGTEXT NOT NULL,
+CREATE TABLE IF NOT EXISTS `cheerup`.`review_info`
+(`pageNumber` INT NOT NULL AUTO_INCREMENT, `studentID` VARCHAR(45) NOT NULL,`content` LONGTEXT NOT NULL,
   `title` VARCHAR(45) NOT NULL,
   `uploadDate` DATETIME NOT NULL,
   `nickName` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`pageNumber`),
-  INDEX `fk_reviewInfo_member_idx` (`nickName` ASC) VISIBLE,
-  CONSTRAINT `fk_reviewInfo_member`
-    FOREIGN KEY (`nickName`)
-    REFERENCES `cheerup`.`member` (`studentID`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB;
+  PRIMARY KEY(`pageNumber`),
+  INDEX `fk_reviewInfo_member_idx`(`nickName` ASC) VISIBLE,
+  CONSTRAINT `fk_reviewInfo_member` FOREIGN KEY(`studentID`)
+  REFERENCES `cheerup`.`member`(`studentID`) ON DELETE CASCADE ON UPDATE CASCADE);
 
 -- 임시 게시물
-INSERT INTO review_info (pageNumber, content, title, uploadDate, nickName)
-VALUES
-    (1, '첫 번째 게시물 내용', '첫 번째 게시물 제목', '2023-08-17 10:00:00', '임시유저'),
-    (2, '두 번째 게시물 내용', '두 번째 게시물 제목', '2023-08-18 14:30:00', '임시유저'),
-    (3, '세 번째 게시물 내용', '세 번째 게시물 제목', '2023-08-19 16:45:00', '임시유저');
+INSERT INTO review_info (studentID, content, title, uploadDate, nickName) VALUES
+  ('202112345', '첫 번째 게시물 내용', '첫 번째 게시물 제목', '2023-08-17 10:00:00', '임시유저'),
+  ('202112345', '두 번째 게시물 내용', '두 번째 게시물 제목', '2023-08-18 14:30:00', '임시유저'),
+  ('202112345', '세 번째 게시물 내용', '세 번째 게시물 제목', '2023-08-19 16:45:00', '임시유저');
 
-----------------------------
+-- --------------------------
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

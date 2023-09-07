@@ -77,8 +77,9 @@ export default {
           if (res.status === 200) {
             alert("로그인이 완료되었습니다.");
 
-            //로그인처리
+            //로그인처리 헤더변경 토큰 저장
             localStorage.setItem("cheerup", res.data.token);
+            //로그인처리 마이페이지 세션
             localStorage.setItem("userId", saveData.userId);
             this.loginSuccess = true;
 
@@ -86,12 +87,13 @@ export default {
             this.$router.push("/");
 
             // 마이페이지에 Id를 전달
-            this.$router.push({
-              name: "myPage",
-              params: { userId: saveData.userId },
-            });
+            // this.$router.push({
+            //   name: "mypage",
+            //   params: { userId: saveData.userId },
+            // });
 
-            console.log("로그인 ID:", saveData.userId);
+            // console.log("로그인페이지:", saveData.userId);
+            //
           }
         })
         .catch((error) => {

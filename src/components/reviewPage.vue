@@ -10,7 +10,6 @@
           <button>작성하기</button>
         </router-link>
       </div>
-      <!-- 게시물 테이블 -->
       <div class="reviewList">
         <table v-if="!selectedPost" class="postTable">
           <thead>
@@ -27,7 +26,6 @@
             </tr>
           </thead>
           <tbody>
-            <!-- 사용자가 원하는 데이터 표시 -->
             <tr
               v-for="(post, index) in paginatedPosts"
               :key="index"
@@ -53,7 +51,6 @@
         </div>
 
         <div class="reviewUnder">
-          <!-- Bootstrap 페이지네이션 -->
           <div class="pageNumber" aria-label="Page navigation example">
             <ul class="pagination d-flex flex-row justify-content-center">
               <li class="page-item">

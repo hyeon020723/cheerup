@@ -18,12 +18,10 @@
           </tr>
         </table>
       </div>
-      <!--tableBox div end-->
       <div class="contentBox">
         {{ post.content }}
       </div>
     </div>
-    <!--reviewBox div end-->
 
     <div class="listButtonBox">
       <router-link to="/reviewlist" class="menu">
@@ -31,9 +29,8 @@
       >
     </div>
   </div>
-
-  <!--WholeBox div end-->
 </template>
+
 <script>
 export default {
   name: "ReviewRead",
