@@ -2,11 +2,8 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const bodyParser = require("body-parser");
-
 const database = require("./database");
 const jwt = require("jsonwebtoken");
-
-app.use(bodyParser.json());
 
 //
 //
@@ -59,10 +56,11 @@ app.post("/api/login", async (req, res) => {
 
 //
 // 마이페이지
-app.get("/api/mypage/:userId", async (req, res) => {
+app.get("/api/mypage/user", async (req, res) => {
   try {
     const userId = req.params.userId;
     const query = "SELECT * FROM member WHERE id = ?";
+
     const results = await database.run(query, [userId]);
 
     if (results.length === 0) {
@@ -84,17 +82,32 @@ app.get("/api/reviewlist", async (req, res) => {
 //
 //게시물 업로드
 app.post("/api/reviewupload", async (req, res) => {
-  const { title, content } = req.body;
-  const nickName = "임시유저";
-  const uploadDate = new Date().toISOString().slice(0, 19).replace("T", " ");
-
   try {
-    const query = `INSERT INTO review_info (title, content, uploadDate, nickName) VALUES (?, ?, ?, ?)`;
-    await database.run(query, [title, content, uploadDate, nickName]);
-    res.status(201).send({ message: "Review uploaded successfully" });
+    userId = "user";
+    const { title, content } = req.review;
+    const Row = await database.run(
+      `SELECT id, password FROM member WHERE id = '${userId}';`
+    );
+
+    // 업로드 시기
+    const currentDate = new Date();
+    const formattedDate = currentDate
+      .toISOString()
+      .slice(0, 19)
+      .replace("T", " ");
+    const queryInsertReview =
+      "INSERT INTO review_info (content, title, uploadDate, nickName, studentID) VALUES (?, ?, ?, ?, ?)";
+    await pool.query(queryInsertReview, [
+      content,
+      title,
+      formattedDate,
+      "닉네임",
+      "202112345",
+    ]);
+    res.status(200).json({ message: "게시물이 성공적으로 업로드되었습니다." });
   } catch (error) {
-    console.error("Error uploading review:", error);
-    res.status(500).send({ error: "Internal server error" });
+    console.error("게시물 업로드 오류:", error);
+    res.status(500).json({ error: "게시물 업로드 중 오류가 발생했습니다." });
   }
 });
 

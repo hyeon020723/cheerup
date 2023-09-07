@@ -10,11 +10,11 @@
         <table class="myPageTable">
           <tr>
             <th>닉네임</th>
-            <td>{{ userData ? userData.nickname : "로딩 중..." }}</td>
+            <td>{{ userData.nickname }}</td>
           </tr>
           <tr>
             <th>아이디</th>
-            <td>{{ userData ? userData.id : "로딩 중..." }}</td>
+            <td>{{ userData.id }}</td>
           </tr>
         </table>
       </div>
@@ -37,28 +37,27 @@ import axios from "axios";
 
 export default {
   name: "myPage",
-  props: ["userId"],
-
   data() {
     return {
       userData: {},
     };
   },
   created() {
-    this.fetchUserData(this.userId);
-    console.log("mypage:", this.userId);
-  },
-  methods: {
-    async fetchUserData(userId) {
-      try {
-        const response = await axios.get(`/api/mypage/${userId}`);
-        this.userData = response.data;
+    const userId = localStorage.getItem("userId");
 
-        console.log("mypage:", this.userData);
-      } catch (error) {
-        console.error(error);
-      }
-    },
+    if (userId) {
+      axios
+        .post(`/api/mypage/${userId}`, { userId })
+        .then((response) => {
+          console.log(userId);
+          this.userData = response.data;
+        })
+        .catch((error) => {
+          console.error("axios 에러 발생:", error);
+        });
+    } else {
+      // 세션에 사용자 정보가 없는 경우
+    }
   },
 };
 </script>
