@@ -6,7 +6,8 @@ const database = require("./database");
 const jwt = require("jsonwebtoken");
 
 //
-//
+// 변경사항 확인
+
 //
 // root
 app.get("/", (req, res) => {
