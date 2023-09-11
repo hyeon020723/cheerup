@@ -4,6 +4,11 @@ const port = 3000;
 const bodyParser = require("body-parser");
 const database = require("./database");
 const jwt = require("jsonwebtoken");
+<<<<<<< HEAD
+=======
+
+app.use(bodyParser.json());
+>>>>>>> test
 
 //
 // 변경사항 확인
@@ -37,15 +42,31 @@ app.post("/api/login", async (req, res) => {
   const userRow = await database.run(
     `SELECT id, password FROM member WHERE id = '${userId}';`
   );
+<<<<<<< HEAD
+=======
+
+  console.log(userId);
+  console.log(userPw);
+  console.log(userRow);
+>>>>>>> test
 
   const checkId = userRow[0].id;
   const checkPw = userRow[0].password;
 
+<<<<<<< HEAD
+=======
+  console.log(checkId);
+  console.log(checkPw);
+
+>>>>>>> test
   if (userId === checkId) {
     if (userPw === checkPw) {
       const token = jwt.sign({ userId }, "cheerup", { expiresIn: "5m" });
       console.log(token);
+<<<<<<< HEAD
 
+=======
+>>>>>>> test
       return res.status(200).send({ message: "Success", token });
     } else {
       return res.status(401).send({ message: "비밀번호를 다시 입력하세요" });
